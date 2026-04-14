@@ -1,0 +1,109 @@
+<script is:inline>
+  const normalizePath = (path) => path.replace(/\/$/, '') || '/';
+
+  const inferBackLabel = (pathname, fallbackLabel) => {
+    const path = normalizePath(pathname);
+    if (/\/paths\/.+/.test(path)) return 'Back to Previous Path';
+    if (path.endsWith('/paths')) return 'Back to Attack Paths';
+    if (/\/domains\/.+/.test(path)) return 'Back to Previous Domain';
+    if (path.endsWith('/domains')) return 'Back to Domain Profiles';
+    if (/\/hosts\/.+/.test(path)) return 'Back to Previous Page';
+    if (path.endsWith('/hosts')) return 'Back to Hosts';
+    if (path.includes('/labs/gcb-lab')) return 'Back to GCB Lab';
+    return fallbackLabel;
+  };
+
+  const enhanceBackLinks = () => {
+    document.querySelectorAll('.js-smart-back').forEach((link) => {
+      if (link.dataset.enhanced === 'true') return;
+      link.dataset.enhanced = 'true';
+
+      const fallbackHref = link.dataset.fallbackHref || '/labs/gcb-lab';
+      const fallbackLabel = link.dataset.fallbackLabel || 'Back';
+      const referrer = document.referrer;
+
+      if (referrer) {
+        try {
+          const refUrl = new URL(referrer);
+          if (refUrl.origin === window.location.origin && refUrl.href !== window.location.href) {
+            const label = inferBackLabel(refUrl.pathname, fallbackLabel);
+            link.textContent = `← ${label}`;
+            link.addEventListener('click', (event) => {
+              event.preventDefault();
+              window.history.back();
+            });
+            return;
+          }
+        } catch {}
+      }
+
+      link.setAttribute('href', fallbackHref);
+      link.textContent = `← ${fallbackLabel}`;
+    });
+  };
+
+  const enhanceCollapsibleSections = () => {
+    document.querySelectorAll('.js-collapsible-sections').forEach((container) => {
+      if (container.dataset.collapsibleEnhanced === 'true') return;
+      container.dataset.collapsibleEnhanced = 'true';
+
+      const headings = Array.from(container.children).filter((child) => child.tagName === 'H2');
+      headings.forEach((heading, index) => {
+        const block = document.createElement('section');
+        block.className = 'collapsible-block is-open';
+        const sourceId = heading.id || `section-${index + 1}`;
+        const headingHtml = heading.innerHTML;
+        const headingText = heading.textContent?.trim() || `Section ${index + 1}`;
+
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'collapsible-trigger';
+        trigger.setAttribute('aria-expanded', 'true');
+        trigger.setAttribute('aria-controls', `${sourceId}-body`);
+        trigger.innerHTML = `
+          <span class="collapsible-trigger-copy">
+            <span class="collapsible-title">${headingHtml}</span>
+          </span>
+          <span class="collapsible-icon" aria-hidden="true">−</span>
+        `;
+
+        const body = document.createElement('div');
+        body.className = 'collapsible-body';
+        body.id = `${sourceId}-body`;
+
+        let next = heading.nextSibling;
+        const nodes = [];
+        while (next && !(next.nodeType === Node.ELEMENT_NODE && next.tagName === 'H2')) {
+          nodes.push(next);
+          next = next.nextSibling;
+        }
+
+        heading.replaceWith(block);
+        block.id = sourceId;
+        block.appendChild(trigger);
+        block.appendChild(body);
+        body.append(...nodes);
+
+        trigger.addEventListener('click', () => {
+          const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', String(!isOpen));
+          block.classList.toggle('is-collapsed', isOpen);
+          body.hidden = isOpen;
+        });
+
+        trigger.setAttribute('aria-label', `Toggle ${headingText}`);
+      });
+    });
+  };
+
+  const initEnhancements = () => {
+    enhanceBackLinks();
+    enhanceCollapsibleSections();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEnhancements, { once: true });
+  } else {
+    initEnhancements();
+  }
+</script>

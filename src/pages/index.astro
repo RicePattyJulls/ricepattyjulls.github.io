@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="RicePattyJulls">
+  <section class="hero section-block">
+    <span class="eyebrow">Offensive Security Documentation</span>
+    <h1 class="hero-title">RicePattyJulls</h1>
+    <p class="hero-copy">
+      Red team notes, attack paths, multi-forest lab documentation and practical writeups focused on Active Directory and Azure.
+    </p>
+  </section>
+
+  <section class="section-block">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      <a class="card link-card" href="/labs">
+        <h3>Labs</h3>
+        <p>Lab documentation, paths, hosts, loot, telemetry and remediation.</p>
+      </a>
+
+      <a class="card link-card" href="/active-directory">
+        <h3>Active Directory</h3>
+        <p>Abuse primitives, trusts, ACLs, delegation, LAPS, RBCD and escalation paths.</p>
+      </a>
+
+      <a class="card link-card" href="/azure">
+        <h3>Azure</h3>
+        <p>Identity, privileges, Graph abuse, managed identities and cloud attack paths.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+      <a class="card link-card compact" href="/notes"><h3>Notes</h3></a>
+      <a class="card link-card compact" href="/about"><h3>About</h3></a>
+      <a class="card link-card compact" href="/contact"><h3>Contact</h3></a>
+    </div>
+  </section>
+</BaseLayout>

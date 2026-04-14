@@ -1,0 +1,16 @@
+---
+interface Props {
+  fallbackHref: string;
+  fallbackLabel?: string;
+}
+
+const { fallbackHref, fallbackLabel = 'Back' } = Astro.props;
+---
+<a
+  class="back-link js-smart-back"
+  href={fallbackHref}
+  data-fallback-href={fallbackHref}
+  data-fallback-label={fallbackLabel}
+>
+  ← {fallbackLabel}
+</a>
