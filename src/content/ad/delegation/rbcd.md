@@ -11,7 +11,7 @@ If an attacker obtains write permissions over this attribute, for example `Gener
 ```
 [ WEB-SERVER ]
 	│
-    │  puede delegar hacia
+    │  
     ▼
 ┌─────────┐
 │ MSSQL   │
@@ -25,12 +25,11 @@ If an attacker obtains write permissions over this attribute, for example `Gener
 > In this model, authorization is defined on the destination object through the attribute: `msDS-AllowedToActOnBehalfOfOtherIdentity`
 
 ```
-	puede delegar hacia este host
 		│
 		▼
 	┌──────────────┐
     │ TRACK01      │
-    │ (recurso)    │
+    │ (recurse)    │
     └──────────────┘
 	    ▲
 	    │
