@@ -25,15 +25,15 @@ If an attacker obtains write permissions over this attribute, for example `Gener
 > In this model, authorization is defined on the destination object through the attribute: `msDS-AllowedToActOnBehalfOfOtherIdentity`
 
 ```
-		│
-		▼
-	┌──────────────┐
-    │ TRACK01      │
-    │ (recurse)    │
-    └──────────────┘
-	    ▲
-	    │
-	it-HOSTATTACK$
+	│
+	▼
+┌──────────────┐
+│ TRACK01      │
+│ (recurse)    │
+└──────────────┘
+    ▲
+    │
+it-HOSTATTACK$
 ```
 
 > If you can write to the object, you can configure the delegation yourself
