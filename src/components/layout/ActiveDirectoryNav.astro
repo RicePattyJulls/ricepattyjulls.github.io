@@ -1,0 +1,47 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  active?: 'overview' | 'credential-access' | 'delegation' | 'domain-dominance' | 'trusts' | 'other';
+  crumbs?: Crumb[];
+}
+
+const { active = 'other', crumbs = [] } = Astro.props;
+const links = [
+  { label: 'Overview', href: '/active-directory#overview', key: 'overview' },
+  { label: 'Credential Access', href: '/active-directory#credential-access', key: 'credential-access' },
+  { label: 'Delegation', href: '/active-directory#delegation', key: 'delegation' },
+  { label: 'Domain Dominance', href: '/active-directory#domain-dominance', key: 'domain-dominance' },
+  { label: 'Trusts', href: '/active-directory#trusts', key: 'trusts' },
+];
+
+const baseCrumbs: Crumb[] = [
+  { label: 'HOME', href: '/' },
+  { label: 'ACTIVE-DIRECTORY', href: '/active-directory' },
+];
+
+const allCrumbs = [...baseCrumbs, ...crumbs];
+---
+<nav class="lab-nav">
+  <div class="lab-nav-crumbs" aria-label="Breadcrumb">
+    {allCrumbs.map((crumb, index) => (
+      <>
+        {crumb.href ? (
+          <a class={`lab-nav-crumb ${index === 0 ? 'lab-nav-brand' : ''}`} href={crumb.href}>{crumb.label}</a>
+        ) : (
+          <span class="lab-nav-current">{crumb.label}</span>
+        )}
+        {index < allCrumbs.length - 1 && <span class="lab-nav-sep">/</span>}
+      </>
+    ))}
+  </div>
+
+  <div class="lab-nav-links">
+    {links.map((link) => (
+      <a class={active === link.key ? 'is-active' : ''} href={link.href}>{link.label}</a>
+    ))}
+  </div>
+</nav>

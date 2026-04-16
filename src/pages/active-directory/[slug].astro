@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ActiveDirectoryNav from '../../components/layout/ActiveDirectoryNav.astro';
+import SmartBackLink from '../../components/layout/SmartBackLink.astro';
+import { adTechniquesBySlug, adSections } from '../../data/activeDirectory';
+
+type TechniqueMeta = (typeof adTechniquesBySlug)[keyof typeof adTechniquesBySlug];
+
+export async function getStaticPaths() {
+  const pages = import.meta.glob('../../content/ad/**/*.md', { eager: true });
+
+  return Object.entries(pages).map(([path, mod]) => {
+    const slug = path.split('/').pop()!.replace('.md', '');
+    return { params: { slug }, props: { mod, slug } };
+  });
+}
+
+const { mod, slug } = Astro.props;
+const Content = mod.default;
+const technique = adTechniquesBySlug[slug as keyof typeof adTechniquesBySlug] as TechniqueMeta;
+const section = adSections[technique.section];
+---
+<BaseLayout title={`${technique.title} | Active Directory`}>
+  <ActiveDirectoryNav active={technique.section} crumbs={[{ label: technique.title.toUpperCase() }]} />
+  <div class="gcb-subnav-gap">
+    <SmartBackLink fallbackHref={`/active-directory#${technique.section}`} fallbackLabel="Back to Active Directory" />
+  </div>
+
+  <header class="page-header">
+    <div class="page-kicker">{technique.eyebrow}</div>
+    <h1>{technique.title}</h1>
+    <p>{technique.description}</p>
+    <div class="page-meta-row">
+      <span class="meta-chip">Active Directory</span>
+      <span class="meta-chip">{section.title}</span>
+      {technique.tags.map((tag) => (
+        <span class="meta-chip">{tag}</span>
+      ))}
+    </div>
+  </header>
+
+  <article class="card prose js-collapsible-sections">
+    <Content />
+  </article>
+</BaseLayout>
