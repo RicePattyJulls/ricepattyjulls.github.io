@@ -4,39 +4,37 @@ RBCD is a modern Kerberos delegation variant in which the destination server (ba
 
 If an attacker obtains write permissions over this attribute, for example `GenericWrite`, `WriteProperty`, or `WriteDacl` on the computer object, they can add an account under their control and allow it to request Kerberos tickets on behalf of other users to that service. This attribute can be modified using Active Directory cmdlets such as `Set-ADComputer`.
 
-- **Classic Constrained Delegation:** the source account defines which backend services it is allowed to delegate to
+- Classic Constrained Delegation: The source service decides which services it can delegate to
 
-> In this model, delegation is configured on the **source account** through the attribute: `msDS-AllowedToDelegateTo`
-
-```
-[ WEB-SERVER$ ]
-      │
-      │  msDS-AllowedToDelegateTo
-      ▼
-┌─────────────────────-─┐
-│ MSSQL/db01.domain     │
-│ CIFS/fileserver.domain│
-│ LDAP/dc.domain        │
-└──────────────────────-┘
-```
-
-- **RBCD:** the destination object defines which principals are allowed to act on behalf of other users against its services
-
-> In this model, authorization is configured on the **destination object** through the attribute: `msDS-AllowedToActOnBehalfOfOtherIdentity`
+> In this model, delegation is defined in the source service attribute: `msDS-AllowedToDelegateTo`
 
 ```
-┌──────────────┐
-│ IT-TRACK01$  │
-│   (target)   │
-└──────────────┘
-      ▲
-      │  msDS-AllowedToActOnBehalfOfOtherIdentity
-      │
-      │  allows
-      │
-┌────────────────┐
-│ IT-HOSTATTACK$ │
-└────────────────┘
+[ WEB-SERVER ]
+	│
+    │  puede delegar hacia
+    ▼
+┌─────────┐
+│ MSSQL   │
+│ CIFS    │
+│ LDAP    │
+└─────────┘
+```
+
+- RBCD: The destination server decides who can delegate to it
+
+> In this model, authorization is defined on the destination object through the attribute: `msDS-AllowedToActOnBehalfOfOtherIdentity`
+
+```
+	puede delegar hacia este host
+		│
+		▼
+	┌──────────────┐
+    │ TRACK01      │
+    │ (recurso)    │
+    └──────────────┘
+	    ▲
+	    │
+	it-HOSTATTACK$
 ```
 
 > If you can write to the object, you can configure the delegation yourself
