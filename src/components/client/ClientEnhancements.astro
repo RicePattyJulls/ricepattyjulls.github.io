@@ -12,7 +12,7 @@
     if (/\/active-directory\/.+/.test(path)) return 'Back to Previous Technique';
     if (path === '/active-directory') return 'Back to Active Directory';
     if (path.includes('/active-directory')) return 'Back to Active Directory';
-    if (path.includes('/labs/gcb-lab')) return 'Back to GCB Lab';
+    if (path.includes('/')) return 'Back home';
     return fallbackLabel;
   };
 
@@ -21,7 +21,7 @@
       if (link.dataset.enhanced === 'true') return;
       link.dataset.enhanced = 'true';
 
-      const fallbackHref = link.dataset.fallbackHref || '/labs/gcb-lab';
+      const fallbackHref = link.dataset.fallbackHref || '/';
       const fallbackLabel = link.dataset.fallbackLabel || 'Back';
       const referrer = document.referrer;
 
