@@ -2,5 +2,83 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Contact | RicePattyJulls">
-  <h1>Contact</h1>
+
+  <section class="hero section-block">
+    <span class="eyebrow">Get in Touch</span>
+    <h1 class="hero-title">Contact</h1>
+    <p class="hero-copy">
+      Available for red team engagements, offensive security research, and identity/cloud
+      security projects. Based in Spain — open to remote, hybrid, and onsite work.
+    </p>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">Links</span>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 1.5rem;">
+
+      <a class="card link-card" href="https://linkedin.com/in/ricepattyjulls" target="_blank" rel="noopener">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">LinkedIn</span>
+        <h3 style="margin-bottom: .5rem;">LinkedIn</h3>
+        <p style="font-size: .9rem; color: var(--muted, #888);">
+          Professional profile and offensive security background.
+        </p>
+        <div style="margin-top: 1rem; font-size: .8rem; color: var(--accent);">
+          linkedin.com/in/ricepattyjulls →
+        </div>
+      </a>
+
+      <a class="card link-card" href="https://github.com/ricepattyjulls" target="_blank" rel="noopener">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">GitHub</span>
+        <h3 style="margin-bottom: .5rem;">GitHub</h3>
+        <p style="font-size: .9rem; color: var(--muted, #888);">
+          Operator toolkit, scripts, and tooling referenced throughout this site.
+        </p>
+        <div style="margin-top: 1rem; font-size: .8rem; color: var(--accent);">
+          github.com/ricepattyjulls →
+        </div>
+      </a>
+
+      <div class="card" style="padding: 1.5rem;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">Email</span>
+        <h3 style="margin-bottom: .5rem;">Email</h3>
+        <p style="font-size: .9rem; color: var(--muted, #888); margin-bottom: 1rem;">
+          For project inquiries, engagement discussions, or research collaboration.
+        </p>
+        <code style="font-size: .85rem; color: var(--accent);">ricepattyjulls@proton.me</code>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">Availability</span>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 1.5rem;">
+
+      <div class="card" style="padding: 1.25rem;">
+        <h3 class="path-title" style="margin-bottom: .5rem;">Location</h3>
+        <p style="font-size: .9rem; color: var(--muted, #888);">Spain</p>
+      </div>
+
+      <div class="card" style="padding: 1.25rem;">
+        <h3 class="path-title" style="margin-bottom: .5rem;">Work Mode</h3>
+        <p style="font-size: .9rem; color: var(--muted, #888);">Remote · Hybrid · Onsite</p>
+      </div>
+
+      <div class="card" style="padding: 1.25rem;">
+        <h3 class="path-title" style="margin-bottom: .5rem;">Focus</h3>
+        <p style="font-size: .9rem; color: var(--muted, #888);">Red Team · Pentesting · Identity & Cloud Security</p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer-note">
+    <span>Spain · Remote available</span>
+    <span>Offensive Security · Red Team · Identity</span>
+  </div>
+
 </BaseLayout>

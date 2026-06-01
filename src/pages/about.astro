@@ -2,5 +2,105 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="About | RicePattyJulls">
-  <h1>About</h1>
+
+  <section class="hero section-block">
+    <span class="eyebrow">Offensive Security Practitioner</span>
+    <h1 class="hero-title">About</h1>
+    <p class="hero-copy">
+      Red team operator and offensive security researcher focused on identity attacks,
+      cloud privilege escalation, and Active Directory exploitation. This site is an
+      operator notebook — built from lab work, certification material, and hands-on
+      offensive research. Not a showcase of compliance deliverables.
+    </p>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">Focus Areas</span>
+    <div class="hero-stats" style="margin-top: 1.5rem;">
+      <div class="card stat-card hot">
+        <p class="stat-value">AD</p>
+        <span class="stat-label">Kerberos · Delegation · Trust Abuse</span>
+      </div>
+      <div class="card stat-card hot">
+        <p class="stat-value">Entra ID</p>
+        <span class="stat-label">Token Tradecraft · Graph · ARM</span>
+      </div>
+      <div class="card stat-card">
+        <p class="stat-value">Cloud</p>
+        <span class="stat-label">Privilege Escalation · Identity Abuse</span>
+      </div>
+      <div class="card stat-card">
+        <p class="stat-value">Web</p>
+        <span class="stat-label">Auth Bypass · Logic Flaws · API Abuse</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">Certifications</span>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 1.5rem;">
+
+      <div class="card" style="padding: 1.5rem;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">CRTO</span>
+        <h3 class="path-title" style="margin-bottom: .5rem;">Certified Red Team Operator</h3>
+        <p style="font-size: .9rem; line-height: 1.6; color: var(--muted, #888);">
+          Red team operations against Windows environments. C2 infrastructure, OPSEC, Active Directory
+          exploitation end-to-end — credential access, lateral movement, domain dominance,
+          and evasion against modern defenses.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">CRTM</span>
+        <h3 class="path-title" style="margin-bottom: .5rem;">Certified Red Team Master</h3>
+        <p style="font-size: .9rem; line-height: 1.6; color: var(--muted, #888);">
+          Advanced red team techniques. Complex trust abuse, MSSQL lateral movement chains,
+          cross-forest pivoting, advanced evasion, and post-exploitation across segmented environments.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">CARTE</span>
+        <h3 class="path-title" style="margin-bottom: .5rem;">Certified Azure Red Team Expert</h3>
+        <p style="font-size: .9rem; line-height: 1.6; color: var(--muted, #888);">
+          Azure and Entra ID offensive operations. Token theft, Graph and ARM abuse, Key Vault
+          exploitation, Managed Identity abuse, hybrid attack paths, and cross-tenant pivoting.
+          The primary source for the Azure section of this site.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">What This Site Is</span>
+    <div class="card" style="padding: 1.75rem; max-width: 760px;">
+      <p style="font-size: 1rem; line-height: 1.75; margin-bottom: 1rem;">
+        An operator notebook built from real lab work — Active Directory attack paths from CRTO and CRTM,
+        Entra ID and Azure techniques from CARTE, and web exploitation research from ongoing practice.
+      </p>
+      <p style="font-size: 1rem; line-height: 1.75; margin-bottom: 1rem;">
+        Every technique documented here has been validated in a lab environment. The content is sanitized —
+        no live credential material, no exam-specific identifiers, no raw writeups — but the attack logic
+        is real and operator-usable.
+      </p>
+      <p style="font-size: 1rem; line-height: 1.75;">
+        The focus is identity and cloud: Active Directory trust abuse, Entra ID token tradecraft,
+        Azure privilege escalation chains, and the hybrid paths that connect them. Web exploitation
+        is a parallel track. No compliance content, no defensive posturing, no marketing copy.
+      </p>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    <span>Offensive Security · Identity · Cloud · Active Directory</span>
+    <a href="/contact" style="color: var(--accent);">Get in touch →</a>
+  </div>
+
 </BaseLayout>

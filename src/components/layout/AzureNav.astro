@@ -1,0 +1,56 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  active?: keyof typeof import('../../data/azure').azureSections | 'overview' | 'other';
+  crumbs?: Crumb[];
+}
+
+const { active = 'other', crumbs = [] } = Astro.props;
+
+const links = [
+  { label: 'Overview',           href: '/azure#overview',             key: 'overview' },
+  { label: 'Identity & Tokens',  href: '/azure#identity-token-model', key: 'identity-token-model' },
+  { label: 'Initial Access',     href: '/azure#initial-access',       key: 'initial-access' },
+  { label: 'Recon',              href: '/azure#recon-enumeration',    key: 'recon-enumeration' },
+  { label: 'Graph',              href: '/azure#graph-abuse',          key: 'graph-abuse' },
+  { label: 'ARM',                href: '/azure#arm-abuse',            key: 'arm-abuse' },
+  { label: 'Storage',            href: '/azure#storage-abuse',        key: 'storage-abuse' },
+  { label: 'Key Vault',          href: '/azure#key-vault-abuse',      key: 'key-vault-abuse' },
+  { label: 'Managed IDs',        href: '/azure#managed-identities',   key: 'managed-identities' },
+  { label: 'Automation',         href: '/azure#automation-logic-arc', key: 'automation-logic-arc' },
+  { label: 'Cross-Tenant',       href: '/azure#cross-tenant-b2b',     key: 'cross-tenant-b2b' },
+  { label: 'Hybrid AD',          href: '/azure#hybrid-ad-paths',      key: 'hybrid-ad-paths' },
+  { label: 'Toolkit',            href: '/azure#operator-toolkit',     key: 'operator-toolkit' },
+];
+
+const baseCrumbs: Crumb[] = [
+  { label: 'HOME', href: '/' },
+  { label: 'AZURE', href: '/azure' },
+];
+
+const allCrumbs = [...baseCrumbs, ...crumbs];
+---
+<nav class="lab-nav">
+  <div class="lab-nav-crumbs" aria-label="Breadcrumb">
+    {allCrumbs.map((crumb, index) => (
+      <>
+        {crumb.href ? (
+          <a class={`lab-nav-crumb ${index === 0 ? 'lab-nav-brand' : ''}`} href={crumb.href}>{crumb.label}</a>
+        ) : (
+          <span class="lab-nav-current">{crumb.label}</span>
+        )}
+        {index < allCrumbs.length - 1 && <span class="lab-nav-sep">/</span>}
+      </>
+    ))}
+  </div>
+
+  <div class="lab-nav-links">
+    {links.map((link) => (
+      <a class={active === link.key ? 'is-active' : ''} href={link.href}>{link.label}</a>
+    ))}
+  </div>
+</nav>

@@ -2,5 +2,95 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Notes | RicePattyJulls">
-  <h1>Notes</h1>
+
+  <section class="hero section-block">
+    <span class="eyebrow">Operator Notes</span>
+    <h1 class="hero-title">Notes</h1>
+    <p class="hero-copy">
+      Short-form technical references — TTPs, command patterns, payload logic, abuse primitives,
+      and tool notes. Not blog posts. Not tutorials. Operator references built for quick recall
+      during engagements and lab work.
+    </p>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">What Goes Here</span>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 1.5rem;">
+
+      <div class="card" style="padding: 1.5rem;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">Format</span>
+        <h3 class="path-title" style="margin-bottom: .75rem;">Short Technical References</h3>
+        <div class="path-steps">
+          <div class="path-step"><span class="path-dot"></span><span>Technique context and why it works</span></div>
+          <div class="path-step"><span class="path-dot"></span><span>Key command or payload pattern</span></div>
+          <div class="path-step"><span class="path-dot"></span><span>Gotchas, edge cases, and OPSEC notes</span></div>
+          <div class="path-step"><span class="path-dot"></span><span>Tool or reference link when relevant</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .75rem;">Content</span>
+        <h3 class="path-title" style="margin-bottom: .75rem;">What You'll Find</h3>
+        <div class="path-steps">
+          <div class="path-step"><span class="path-dot"></span><span>Abuse primitives — atomic attack actions and their preconditions</span></div>
+          <div class="path-step"><span class="path-dot"></span><span>Command patterns — flags, parameters, and output parsing</span></div>
+          <div class="path-step"><span class="path-dot"></span><span>Payload logic — how specific payloads or exploits function</span></div>
+          <div class="path-step"><span class="path-dot"></span><span>Tooling notes — quirks, limitations, and effective usage</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section-block">
+    <span class="section-tag">In Progress</span>
+    <p style="color: var(--muted, #888); margin-bottom: 1.5rem; font-size: .95rem;">
+      Notes sections being built out. Content publishes incrementally as it gets cleaned and structured.
+    </p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+
+      <div class="card" style="padding: 1.25rem; opacity: 0.65;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .5rem;">01 / Active Directory</span>
+        <h3 class="path-title" style="margin: .5rem 0;">AD Notes</h3>
+        <p style="font-size: .85rem; color: var(--muted, #888);">
+          Kerberos flows, ACL primitives, delegation conditions, trust mechanics, and credential abuse patterns.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 1.25rem; opacity: 0.65;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .5rem;">02 / Azure / Entra ID</span>
+        <h3 class="path-title" style="margin: .5rem 0;">Azure Notes</h3>
+        <p style="font-size: .85rem; color: var(--muted, #888);">
+          Token anatomy, FOCI family reference, CA policy conditions, Graph permission scopes, and ARM resource types.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 1.25rem; opacity: 0.65;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .5rem;">03 / Web</span>
+        <h3 class="path-title" style="margin: .5rem 0;">Web Notes</h3>
+        <p style="font-size: .85rem; color: var(--muted, #888);">
+          Auth bypass patterns, authorization logic flaws, injection primitives, and API abuse references.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 1.25rem; opacity: 0.65;">
+        <span class="index-badge" style="display:inline-block; margin-bottom: .5rem;">04 / Tooling</span>
+        <h3 class="path-title" style="margin: .5rem 0;">Tooling Notes</h3>
+        <p style="font-size: .85rem; color: var(--muted, #888);">
+          Impacket, Rubeus, PowerView, C2 framework patterns, and operator toolkit reference.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer-note">
+    <span>Operator References · Not a Blog</span>
+    <span>TTPs · Primitives · Command Patterns</span>
+  </div>
+
 </BaseLayout>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AzureNav from '../../components/layout/AzureNav.astro';
+import SmartBackLink from '../../components/layout/SmartBackLink.astro';
+import { azureTechniquesBySlug, azureSections } from '../../data/azure';
+
+type TechniqueMeta = (typeof azureTechniquesBySlug)[keyof typeof azureTechniquesBySlug];
+
+export async function getStaticPaths() {
+  const pages = import.meta.glob('../../content/azure/**/*.md', { eager: true });
+
+  return Object.entries(pages).flatMap(([path, mod]) => {
+    const slug = path.split('/').pop()!.replace(/\.mdx?$/, '');
+
+    if (!(slug in azureTechniquesBySlug)) {
+      return [];
+    }
+
+    return [
+      {
+        params: { slug },
+        props: { mod, slug },
+      },
+    ];
+  });
+}
+
+const { mod, slug } = Astro.props;
+
+const Content = (mod as { default: any }).default;
+const technique = azureTechniquesBySlug[slug as keyof typeof azureTechniquesBySlug] as TechniqueMeta;
+const section = azureSections[technique.section as keyof typeof azureSections];
+---
+
+<BaseLayout title={`${technique.title} | Azure / Entra ID`}>
+  <AzureNav active={technique.section as any} crumbs={[{ label: technique.title.toUpperCase() }]} />
+
+  <div class="gcb-subnav-gap">
+    <SmartBackLink fallbackHref={`/azure#${technique.section}`} fallbackLabel="Back to Azure / Entra ID" />
+  </div>
+
+  <header class="page-header">
+    <div class="page-kicker">{technique.eyebrow}</div>
+    <h1>{technique.title}</h1>
+    <p>{technique.description}</p>
+
+    <div class="page-meta-row">
+      <span class="meta-chip">Azure / Entra ID</span>
+      <span class="meta-chip">{section.title}</span>
+      {technique.tags.map((tag) => (
+        <span class="meta-chip">{tag}</span>
+      ))}
+    </div>
+  </header>
+
+  <article class="card prose js-collapsible-sections">
+    <Content />
+  </article>
+
+  <div class="footer-note">
+    <span>Azure · {technique.eyebrow}</span>
+    <span>{technique.title}</span>
+  </div>
+</BaseLayout>
