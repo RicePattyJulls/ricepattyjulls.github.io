@@ -12,24 +12,25 @@ interface Props {
 const { active = 'other', crumbs = [] } = Astro.props;
 
 const links = [
-  { label: 'Overview',           href: '/azure#overview',             key: 'overview' },
-  { label: 'Identity & Tokens',  href: '/azure#identity-token-model', key: 'identity-token-model' },
-  { label: 'Initial Access',     href: '/azure#initial-access',       key: 'initial-access' },
-  { label: 'Recon',              href: '/azure#recon-enumeration',    key: 'recon-enumeration' },
-  { label: 'Graph',              href: '/azure#graph-abuse',          key: 'graph-abuse' },
-  { label: 'ARM',                href: '/azure#arm-abuse',            key: 'arm-abuse' },
-  { label: 'Storage',            href: '/azure#storage-abuse',        key: 'storage-abuse' },
-  { label: 'Key Vault',          href: '/azure#key-vault-abuse',      key: 'key-vault-abuse' },
-  { label: 'Managed IDs',        href: '/azure#managed-identities',   key: 'managed-identities' },
-  { label: 'Automation',         href: '/azure#automation-logic-arc', key: 'automation-logic-arc' },
-  { label: 'Cross-Tenant',       href: '/azure#cross-tenant-b2b',     key: 'cross-tenant-b2b' },
-  { label: 'Hybrid AD',          href: '/azure#hybrid-ad-paths',      key: 'hybrid-ad-paths' },
-  { label: 'Toolkit',            href: '/azure#operator-toolkit',     key: 'operator-toolkit' },
+  { label: 'Overview',          href: '/azure#overview',           key: 'overview' },
+  { label: 'Identity & Tokens', href: '/azure#identity-tokens',    key: 'identity-token-model' },
+  { label: 'Initial Access',    href: '/azure#initial-access',     key: 'initial-access' },
+  { label: 'Recon',             href: '/azure#recon',              key: 'recon-enumeration' },
+  { label: 'Graph',             href: '/azure#graph',              key: 'graph-abuse' },
+  { label: 'ARM',               href: '/azure#arm',                key: 'arm-abuse' },
+  { label: 'Storage',           href: '/azure#storage',            key: 'storage-abuse' },
+  { label: 'Key Vault',         href: '/azure#key-vault',          key: 'key-vault-abuse' },
+  { label: 'Managed IDs',       href: '/azure#managed-identities', key: 'managed-identities' },
+  { label: 'Automation',        href: '/azure#automation',         key: 'automation-logic-arc' },
+  { label: 'Cross-Tenant',      href: '/azure#cross-tenant-b2b',   key: 'cross-tenant-b2b' },
+  { label: 'Hybrid AD',         href: '/azure#hybrid-ad',          key: 'hybrid-ad-paths' },
+  { label: 'Toolkit',           href: '/azure#operator-toolkit',   key: 'operator-toolkit' },
 ];
 
+// HOME always links to /. AZURE links to /azure only when we're on a sub-page (crumbs provided).
 const baseCrumbs: Crumb[] = [
   { label: 'HOME', href: '/' },
-  { label: 'AZURE', href: '/azure' },
+  { label: 'AZURE', href: crumbs.length > 0 ? '/azure' : undefined },
 ];
 
 const allCrumbs = [...baseCrumbs, ...crumbs];
@@ -39,18 +40,32 @@ const allCrumbs = [...baseCrumbs, ...crumbs];
     {allCrumbs.map((crumb, index) => (
       <>
         {crumb.href ? (
-          <a class={`lab-nav-crumb ${index === 0 ? 'lab-nav-brand' : ''}`} href={crumb.href}>{crumb.label}</a>
+          <a class={`lab-nav-crumb${index === 0 ? ' lab-nav-brand' : ''}`} href={crumb.href}>{crumb.label}</a>
         ) : (
-          <span class="lab-nav-current">{crumb.label}</span>
+          <span class={`lab-nav-current${index === 0 ? ' lab-nav-brand' : ''}`}>{crumb.label}</span>
         )}
         {index < allCrumbs.length - 1 && <span class="lab-nav-sep">/</span>}
       </>
     ))}
   </div>
 
-  <div class="lab-nav-links">
+  <div class="lab-nav-links azure-nav-links">
     {links.map((link) => (
       <a class={active === link.key ? 'is-active' : ''} href={link.href}>{link.label}</a>
     ))}
   </div>
 </nav>
+
+<style>
+  /* Azure nav scrolls horizontally on narrow viewports — no wrapping, no squashing */
+  .azure-nav-links {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .azure-nav-links a {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

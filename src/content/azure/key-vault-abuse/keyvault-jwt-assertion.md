@@ -84,4 +84,4 @@ $GraphToken = $response.access_token
 
 ## Tooling
 
-The full certificate enumeration function and `New-SignedJWTWithKeyVault` signing function are in the Operator Toolkit on GitHub. Do not paste the full signing script inline — reference the GitHub module.
+The full certificate enumeration function and `New-SignedJWTWithKeyVault` signing function are in the Operator Toolkit on GitHub

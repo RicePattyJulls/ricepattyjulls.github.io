@@ -2,64 +2,45 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AzureNav from '../components/layout/AzureNav.astro';
 import { azureSections, azureTechniquesBySection } from '../data/azure';
-
-const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof azureSections>).filter(
-  (k) => !(['identity-token-model', 'recon-enumeration', 'operator-toolkit',
-             'initial-access', 'graph-abuse', 'key-vault-abuse'] as string[]).includes(k)
-);
 ---
 <BaseLayout title="Azure | RicePattyJulls">
   <AzureNav active="overview" />
 
-  <!-- OVERVIEW HERO -->
-  <section id="overview" class="hero section-block">
+  <!-- 00 / OVERVIEW -->
+  <section id="overview" class="hero section-block" style="scroll-margin-top:80px;">
     <h1 class="hero-title"><span class="accent-text">Azure</span> / Entra ID</h1>
-    <span class="section-tag" style="display:inline-block; margin-top: 2.5rem;">00 / Overview</span>
+    <span class="section-tag" style="display:inline-block;margin-top:2.5rem;">00 / Overview</span>
     <p class="hero-copy">
       Microsoft Entra ID is the identity control plane for Azure — and identity is the perimeter.
       Every resource access decision flows through OAuth 2.0 tokens, Conditional Access policies,
       role assignments, and service principal permissions. Understanding what each token can reach,
       how it was acquired, and where CA gaps exist defines the attack surface.
     </p>
-    <p class="hero-copy" style="margin-top: 1rem;">
+    <p class="hero-copy" style="margin-top:1rem;">
       This section covers Entra ID offensive operations from initial token acquisition through
       cross-tenant privilege projection: device code phishing, FOCI abuse, Graph and ARM manipulation,
       Key Vault data plane extraction, Managed Identity IMDS abuse, and hybrid on-prem pivots.
     </p>
     <div class="hero-stats">
-      <div class="card stat-card hot">
-        <p class="stat-value">12</p>
-        <span class="stat-label">Attack Surfaces</span>
-      </div>
-      <div class="card stat-card">
-        <p class="stat-value">3</p>
-        <span class="stat-label">Planes: Identity · Mgmt · Data</span>
-      </div>
-      <div class="card stat-card hot">
-        <p class="stat-value">OAuth 2.0</p>
-        <span class="stat-label">Token-Based Attack Surface</span>
-      </div>
-      <div class="card stat-card">
-        <p class="stat-value">CARTE</p>
-        <span class="stat-label">Certification Material</span>
-      </div>
+      <div class="card stat-card hot"><p class="stat-value">12</p><span class="stat-label">Attack Surfaces</span></div>
+      <div class="card stat-card"><p class="stat-value">35</p><span class="stat-label">Documented Techniques</span></div>
+      <div class="card stat-card hot"><p class="stat-value">OAuth 2.0</p><span class="stat-label">Token-Based Attack Surface</span></div>
+      <div class="card stat-card"><p class="stat-value">CARTE</p><span class="stat-label">Certification Material</span></div>
     </div>
   </section>
 
   <div class="section-divider"></div>
 
   <!-- 01 / IDENTITY & TOKEN MODEL -->
-  <section id="identity-token-model" class="section-block">
+  <section id="identity-tokens" class="section-block" style="scroll-margin-top:80px;">
     <div class="section-header">
       <span class="section-tag">01 / Identity & Token Model</span>
       <h2 class="section-title">Identity &amp; Token Model</h2>
       <p class="section-copy">{azureSections['identity-token-model'].description}</p>
     </div>
-    <div class="path-grid" style="margin-top: 2rem;">
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Token Types</span>
-        </div>
+    <div class="path-grid" style="margin-top:2rem;">
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Token Types</span></div>
         <h3 class="path-title" style="margin-bottom:1rem;">Three Artifacts, Three Attack Values</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span><strong>Access Token (AT)</strong> — Short-lived (~1h). Bearer credential scoped to a specific resource audience. Stealing an AT = scoped access without credentials.</span></div>
@@ -67,10 +48,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
           <div class="path-step"><span class="path-dot"></span><span><strong>ID Token</strong> — Identity assertion only. Tells the app who the user is. Not usable as bearer credential against APIs.</span></div>
         </div>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Acquisition Flows</span>
-        </div>
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Acquisition Flows</span></div>
         <h3 class="path-title" style="margin-bottom:1rem;">How Tokens Are Obtained</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span><strong>Device Code Flow</strong> — Attacker initiates; victim authenticates. Token lands on attacker side. MFA-resistant if CA doesn't block the flow.</span></div>
@@ -79,21 +58,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
           <div class="path-step"><span class="path-dot"></span><span><strong>IMDS</strong> — From compromised Azure compute. No credentials needed — the VM or container identity is the auth material.</span></div>
         </div>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">FOCI Family</span>
-        </div>
-        <h3 class="path-title" style="margin-bottom:1rem;">Family of Client IDs</h3>
-        <div class="path-steps">
-          <div class="path-step"><span class="path-dot"></span><span>FOCI allows certain Microsoft first-party client IDs to share a refresh token family. <code>foci: 1</code> in the token response signals eligibility.</span></div>
-          <div class="path-step"><span class="path-dot"></span><span>One FOCI RT can be reused across Office, Teams, Outlook, and others — each pivot can target a different resource scope.</span></div>
-          <div class="path-step"><span class="path-dot"></span><span>Attack value: acquire one RT via DCF phishing → pivot to Graph, ARM, Key Vault, Storage without re-authentication.</span></div>
-        </div>
-      </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Attack Surface</span>
-        </div>
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Attack Surface</span></div>
         <h3 class="path-title" style="margin-bottom:1rem;">Where Tokens Live</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span><strong>Browser</strong> — MSAL.js session storage, cookies. Accessible via XSS or compromised browser session.</span></div>
@@ -107,8 +73,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
 
   <div class="section-divider"></div>
 
-  <!-- 02 / INITIAL ACCESS — technique cards -->
-  <section id="initial-access" class="section-block">
+  <!-- 02 / INITIAL ACCESS -->
+  <section id="initial-access" class="section-block" style="scroll-margin-top:80px;">
     <div class="section-header">
       <span class="section-tag">02 / Initial Access</span>
       <h2 class="section-title">Initial Access</h2>
@@ -117,20 +83,10 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
     <div class="path-grid">
       {azureTechniquesBySection['initial-access'].map((tech, index) => (
         <a class="card path-card" href={`/azure/${tech.slug}`}>
-          <div class="path-head">
-            <span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span>
-            <span style="font-size:.95rem;">🔥</span>
-          </div>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
           <h3 class="path-title">{tech.title}</h3>
-          <div class="path-steps">
-            {tech.summary.map((step) => (
-              <div class="path-step"><span class="path-dot"></span><span>{step}</span></div>
-            ))}
-          </div>
-          <div class="path-foot">
-            <span>{tech.tags.join(' · ')}</span>
-            <span class="path-result">INITIAL ACCESS</span>
-          </div>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">INITIAL ACCESS</span></div>
         </a>
       ))}
     </div>
@@ -139,17 +95,15 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
   <div class="section-divider"></div>
 
   <!-- 03 / RECON & ENUMERATION -->
-  <section id="recon-enumeration" class="section-block">
+  <section id="recon" class="section-block" style="scroll-margin-top:80px;">
     <div class="section-header">
       <span class="section-tag">03 / Recon & Enumeration</span>
       <h2 class="section-title">Recon &amp; Enumeration</h2>
       <p class="section-copy">{azureSections['recon-enumeration'].description}</p>
     </div>
-    <div class="path-grid" style="margin-top: 2rem;">
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Phase 1</span><code style="font-size:.8rem;color:var(--accent);">get_token</code>
-        </div>
+    <div class="path-grid" style="margin-top:2rem;">
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Phase 1</span><code style="font-size:.8rem;color:var(--accent);">get_token</code></div>
         <h3 class="path-title" style="margin-bottom:1rem;">Token Acquisition</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span>Multi-flow acquisition: DCF, ROPC, auth code, client credentials, certificate assertion, browser extraction.</span></div>
@@ -158,10 +112,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
         </div>
         <div class="path-foot" style="margin-top:1rem;"><span>Permissions: varies by flow</span><span class="path-result">→ GitHub</span></div>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Phase 2</span><code style="font-size:.8rem;color:var(--accent);">recon</code>
-        </div>
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Phase 2</span><code style="font-size:.8rem;color:var(--accent);">recon</code></div>
         <h3 class="path-title" style="margin-bottom:1rem;">Tenant Mapping</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span>Maps tenant structure: users, groups, service principals, app registrations, device objects.</span></div>
@@ -170,10 +122,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
         </div>
         <div class="path-foot" style="margin-top:1rem;"><span>Needs: Graph AT, ARM AT</span><span class="path-result">→ GitHub</span></div>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Phase 3</span><code style="font-size:.8rem;color:var(--accent);">entraId</code>
-        </div>
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Phase 3</span><code style="font-size:.8rem;color:var(--accent);">entraId</code></div>
         <h3 class="path-title" style="margin-bottom:1rem;">Identity Deep-Dive</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span>Per-principal analysis: directory roles, group memberships, app permissions, OAuth consent grants, PIM eligible assignments.</span></div>
@@ -182,10 +132,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
         </div>
         <div class="path-foot" style="margin-top:1rem;"><span>Needs: Graph AT (Directory.Read)</span><span class="path-result">→ GitHub</span></div>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <span class="index-badge">Phase 4</span><code style="font-size:.8rem;color:var(--accent);">ex_entraId</code>
-        </div>
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span class="index-badge">Phase 4</span><code style="font-size:.8rem;color:var(--accent);">ex_entraId</code></div>
         <h3 class="path-title" style="margin-bottom:1rem;">Abuse Chaining</h3>
         <div class="path-steps">
           <div class="path-step"><span class="path-dot"></span><span>Connects identity context from Phase 3 to abuse operations — role activation, group manipulation, consent grants, token pivoting.</span></div>
@@ -199,8 +147,8 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
 
   <div class="section-divider"></div>
 
-  <!-- 04 / GRAPH ABUSE — technique cards -->
-  <section id="graph-abuse" class="section-block">
+  <!-- 04 / GRAPH ABUSE -->
+  <section id="graph" class="section-block" style="scroll-margin-top:80px;">
     <div class="section-header">
       <span class="section-tag">04 / Graph Abuse</span>
       <h2 class="section-title">Microsoft Graph Abuse</h2>
@@ -209,20 +157,10 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
     <div class="path-grid">
       {azureTechniquesBySection['graph-abuse'].map((tech, index) => (
         <a class="card path-card" href={`/azure/${tech.slug}`}>
-          <div class="path-head">
-            <span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span>
-            <span style="font-size:.95rem;">🔥</span>
-          </div>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
           <h3 class="path-title">{tech.title}</h3>
-          <div class="path-steps">
-            {tech.summary.map((step) => (
-              <div class="path-step"><span class="path-dot"></span><span>{step}</span></div>
-            ))}
-          </div>
-          <div class="path-foot">
-            <span>{tech.tags.join(' · ')}</span>
-            <span class="path-result">GRAPH ABUSE</span>
-          </div>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">GRAPH ABUSE</span></div>
         </a>
       ))}
     </div>
@@ -230,8 +168,50 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
 
   <div class="section-divider"></div>
 
-  <!-- 07 / KEY VAULT ABUSE — technique cards -->
-  <section id="key-vault-abuse" class="section-block">
+  <!-- 05 / ARM ABUSE -->
+  <section id="arm" class="section-block" style="scroll-margin-top:80px;">
+    <div class="section-header">
+      <span class="section-tag">05 / ARM Abuse</span>
+      <h2 class="section-title">ARM Abuse</h2>
+      <p class="section-copy">{azureSections['arm-abuse'].description}</p>
+    </div>
+    <div class="path-grid">
+      {azureTechniquesBySection['arm-abuse'].map((tech, index) => (
+        <a class="card path-card" href={`/azure/${tech.slug}`}>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
+          <h3 class="path-title">{tech.title}</h3>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">ARM ABUSE</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 06 / AZURE STORAGE ABUSE -->
+  <section id="storage" class="section-block" style="scroll-margin-top:80px;">
+    <div class="section-header">
+      <span class="section-tag">06 / Azure Storage Abuse</span>
+      <h2 class="section-title">Azure Storage Abuse</h2>
+      <p class="section-copy">{azureSections['storage-abuse'].description}</p>
+    </div>
+    <div class="path-grid">
+      {azureTechniquesBySection['storage-abuse'].map((tech, index) => (
+        <a class="card path-card" href={`/azure/${tech.slug}`}>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
+          <h3 class="path-title">{tech.title}</h3>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">STORAGE ABUSE</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 07 / KEY VAULT ABUSE -->
+  <section id="key-vault" class="section-block" style="scroll-margin-top:80px;">
     <div class="section-header">
       <span class="section-tag">07 / Key Vault Abuse</span>
       <h2 class="section-title">Key Vault Abuse</h2>
@@ -240,20 +220,94 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
     <div class="path-grid">
       {azureTechniquesBySection['key-vault-abuse'].map((tech, index) => (
         <a class="card path-card" href={`/azure/${tech.slug}`}>
-          <div class="path-head">
-            <span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span>
-            <span style="font-size:.95rem;">🔥</span>
-          </div>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
           <h3 class="path-title">{tech.title}</h3>
-          <div class="path-steps">
-            {tech.summary.map((step) => (
-              <div class="path-step"><span class="path-dot"></span><span>{step}</span></div>
-            ))}
-          </div>
-          <div class="path-foot">
-            <span>{tech.tags.join(' · ')}</span>
-            <span class="path-result">KEY VAULT ABUSE</span>
-          </div>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">KEY VAULT ABUSE</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 08 / MANAGED IDENTITIES -->
+  <section id="managed-identities" class="section-block" style="scroll-margin-top:80px;">
+    <div class="section-header">
+      <span class="section-tag">08 / Managed Identities</span>
+      <h2 class="section-title">Managed Identities</h2>
+      <p class="section-copy">{azureSections['managed-identities'].description}</p>
+    </div>
+    <div class="path-grid">
+      {azureTechniquesBySection['managed-identities'].map((tech, index) => (
+        <a class="card path-card" href={`/azure/${tech.slug}`}>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
+          <h3 class="path-title">{tech.title}</h3>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">MANAGED IDENTITIES</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 09 / AUTOMATION / LOGIC APPS / ARC -->
+  <section id="automation" class="section-block" style="scroll-margin-top:80px;">
+    <div class="section-header">
+      <span class="section-tag">09 / Automation & Orchestration</span>
+      <h2 class="section-title">Automation / Logic Apps / Arc</h2>
+      <p class="section-copy">{azureSections['automation-logic-arc'].description}</p>
+    </div>
+    <div class="path-grid">
+      {azureTechniquesBySection['automation-logic-arc'].map((tech, index) => (
+        <a class="card path-card" href={`/azure/${tech.slug}`}>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
+          <h3 class="path-title">{tech.title}</h3>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">AUTOMATION & ORCH</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 10 / CROSS-TENANT & B2B -->
+  <section id="cross-tenant-b2b" class="section-block" style="scroll-margin-top:80px;">
+    <div class="section-header">
+      <span class="section-tag">10 / Cross-Tenant & B2B</span>
+      <h2 class="section-title">Cross-Tenant &amp; B2B</h2>
+      <p class="section-copy">{azureSections['cross-tenant-b2b'].description}</p>
+    </div>
+    <div class="path-grid">
+      {azureTechniquesBySection['cross-tenant-b2b'].map((tech, index) => (
+        <a class="card path-card" href={`/azure/${tech.slug}`}>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
+          <h3 class="path-title">{tech.title}</h3>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">CROSS-TENANT</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 11 / HYBRID AD PATHS -->
+  <section id="hybrid-ad" class="section-block" style="scroll-margin-top:80px;">
+    <div class="section-header">
+      <span class="section-tag">11 / Hybrid AD Paths</span>
+      <h2 class="section-title">Hybrid AD Paths</h2>
+      <p class="section-copy">{azureSections['hybrid-ad-paths'].description}</p>
+    </div>
+    <div class="path-grid">
+      {azureTechniquesBySection['hybrid-ad-paths'].map((tech, index) => (
+        <a class="card path-card" href={`/azure/${tech.slug}`}>
+          <div class="path-head"><span class="index-badge">Technique {String(index + 1).padStart(2, '0')}</span><span style="font-size:.95rem;">🔥</span></div>
+          <h3 class="path-title">{tech.title}</h3>
+          <div class="path-steps">{tech.summary.map((step) => (<div class="path-step"><span class="path-dot"></span><span>{step}</span></div>))}</div>
+          <div class="path-foot"><span>{tech.tags.join(' · ')}</span><span class="path-result">HYBRID AD</span></div>
         </a>
       ))}
     </div>
@@ -262,74 +316,41 @@ const placeholderSectionKeys = (Object.keys(azureSections) as Array<keyof typeof
   <div class="section-divider"></div>
 
   <!-- 12 / OPERATOR TOOLKIT -->
-  <section id="operator-toolkit" class="section-block">
+  <section id="operator-toolkit" class="section-block" style="scroll-margin-top:80px;">
     <div class="section-header">
       <span class="section-tag">12 / Operator Toolkit</span>
       <h2 class="section-title">Operator Toolkit</h2>
       <p class="section-copy">{azureSections['operator-toolkit'].description}</p>
     </div>
-    <div class="impact-banner" style="margin-top: 1.5rem;">
+    <div class="impact-banner" style="margin-top:1.5rem;">
       <div class="impact-icon"></div>
-      <div class="impact-copy">
-        <strong>Code lives on GitHub.</strong> The scripts below are operator tools built from CARTE lab work. No code is pasted inline on this page.
-      </div>
+      <div class="impact-copy"><strong>Code lives on GitHub.</strong> The scripts below are operator tools built from CARTE lab work. No code is pasted inline on this page.</div>
     </div>
-    <div class="path-grid" style="margin-top: 2rem;">
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
-          <span class="index-badge">Module 01</span><code style="font-size:.8rem;color:var(--accent);">get_token.ps1</code>
-        </div>
+    <div class="path-grid" style="margin-top:2rem;">
+      <a class="card" href="https://github.com/RicePattyJulls/tools/blob/main/AZURE/scripts/get_token.ps1" target="_blank" rel="noopener noreferrer" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;"><span class="index-badge">Module 01</span><code style="font-size:.8rem;color:var(--accent);">get_token.ps1</code></div>
         <h3 class="path-title" style="margin-bottom:.75rem;">Token Acquisition</h3>
         <p style="font-size:.9rem;color:#888;line-height:1.5;margin-bottom:1rem;">Multi-flow token acquisition: DCF, ROPC, auth code, client credentials (secret + certificate), browser extraction, and IMDS. Outputs AT + RT with FOCI detection.</p>
         <div class="path-foot"><span>PowerShell</span><span class="path-result">GitHub →</span></div>
-      </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
-          <span class="index-badge">Module 02</span><code style="font-size:.8rem;color:var(--accent);">recon.ps1</code>
-        </div>
+      </a>
+      <a class="card" href="https://github.com/RicePattyJulls/tools/blob/main/AZURE/scripts/recon.ps1" target="_blank" rel="noopener noreferrer" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;"><span class="index-badge">Module 02</span><code style="font-size:.8rem;color:var(--accent);">recon.ps1</code></div>
         <h3 class="path-title" style="margin-bottom:.75rem;">Tenant Recon</h3>
         <p style="font-size:.9rem;color:#888;line-height:1.5;margin-bottom:1rem;">Tenant structure mapping via Graph and ARM. Enumerates users, groups, SPs, app registrations, RBAC assignments, and CA policies. Outputs structured attack surface view.</p>
         <div class="path-foot"><span>PowerShell</span><span class="path-result">GitHub →</span></div>
-      </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
-          <span class="index-badge">Module 03</span><code style="font-size:.8rem;color:var(--accent);">entraId.ps1</code>
-        </div>
+      </a>
+      <a class="card" href="https://github.com/RicePattyJulls/tools/blob/main/AZURE/scripts/entraid.ps1" target="_blank" rel="noopener noreferrer" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;"><span class="index-badge">Module 03</span><code style="font-size:.8rem;color:var(--accent);">entraId.ps1</code></div>
         <h3 class="path-title" style="margin-bottom:.75rem;">Identity Deep-Dive</h3>
         <p style="font-size:.9rem;color:#888;line-height:1.5;margin-bottom:1rem;">Per-principal analysis. Resolves directory roles, group memberships (transitive), app permissions, OAuth consents, and PIM eligible assignments for any user, SP, or managed identity.</p>
         <div class="path-foot"><span>PowerShell</span><span class="path-result">GitHub →</span></div>
-      </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
-          <span class="index-badge">Module 04</span><code style="font-size:.8rem;color:var(--accent);">ex_entraId.ps1</code>
-        </div>
+      </a>
+      <a class="card" href="https://github.com/RicePattyJulls/tools/blob/main/AZURE/scripts/ex_entraId.ps1" target="_blank" rel="noopener noreferrer" style="padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;"><span class="index-badge">Module 04</span><code style="font-size:.8rem;color:var(--accent);">ex_entraId.ps1</code></div>
         <h3 class="path-title" style="margin-bottom:.75rem;">Abuse Module</h3>
         <p style="font-size:.9rem;color:#888;line-height:1.5;margin-bottom:1rem;">Chains enumeration to abuse operations — PIM activation, group manipulation, consent grants, token pivoting. Operates on the identity surface mapped by entraId.</p>
         <div class="path-foot"><span>PowerShell</span><span class="path-result">GitHub →</span></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- COMING SOON — remaining placeholder sections -->
-  <section class="section-block">
-    <div class="section-header">
-      <span class="section-tag">In Progress</span>
-      <h2 class="section-title">More Attack Surfaces</h2>
-      <p class="section-copy">These sections are being built out. Technique cards and detail pages will follow.</p>
-    </div>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 1.5rem;">
-      {placeholderSectionKeys.map((key) => {
-        const section = azureSections[key];
-        return (
-          <div class="card" style="padding: 1.25rem; opacity: 0.6;">
-            <span class="index-badge" style="margin-bottom:.75rem;display:inline-block;">{section.tag}</span>
-            <h3 class="path-title" style="margin:.5rem 0;">{section.title}</h3>
-            <p style="font-size:.85rem;color:#888;line-height:1.5;">{section.description}</p>
-          </div>
-        );
-      })}
+      </a>
     </div>
   </section>
 

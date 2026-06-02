@@ -3,6 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="About | RicePattyJulls">
 
+  <nav class="lab-nav">
+    <div class="lab-nav-crumbs">
+      <a class="lab-nav-brand" href="/">HOME</a>
+      <span class="lab-nav-sep">/</span>
+      <span class="lab-nav-current">ABOUT</span>
+    </div>
+  </nav>
+
   <section class="hero section-block">
     <span class="eyebrow">Offensive Security Practitioner</span>
     <h1 class="hero-title">About</h1>
@@ -100,7 +108,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <div class="footer-note">
     <span>Offensive Security · Identity · Cloud · Active Directory</span>
-    <a href="/contact" style="color: var(--accent);">Get in touch →</a>
+    <a href="/#contact" style="color: var(--accent);">Get in touch →</a>
   </div>
 
 </BaseLayout>

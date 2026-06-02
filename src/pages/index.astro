@@ -1,37 +1,69 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
 <BaseLayout title="RicePattyJulls">
+
+  <!-- HERO -->
   <section class="hero section-block">
-    <span class="eyebrow">Offensive Security Documentation</span>
+    <span class="eyebrow">Offensive Security · Knowledge Base</span>
     <h1 class="hero-title">RicePattyJulls</h1>
+    <p></p>
     <p class="hero-copy">
-      Red team notes, lab reports, and technique references focused on Active Directory and Azure operations.
+      A technical operator notebook focused on offensive Active Directory operations, Microsoft Entra ID and Azure identity abuse, cloud privilege escalation, token tradecraft, and web exploitation. Built from lab-driven research, real-world attack paths, and hands-on tradecraft. Not a blog. Not a portfolio. A field manual for offensive security work.
+
     </p>
+
   </section>
 
+  <!-- PRIMARY CONTENT -->
   <section class="section-block">
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-      
+    <span class="section-tag">Technical Content</span>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.5rem;">
 
       <a class="card link-card" href="/active-directory">
+        <span class="index-badge" style="margin-bottom: .75rem; display: inline-block;">01 / Active Directory</span>
         <h3>Active Directory</h3>
-        <p>Technique notes on credential access, delegation, domain dominance, and trust abuse.</p>
+        <p>Credential access, Kerberos abuse, delegation attacks, lateral movement, domain dominance, and trust exploitation.</p>
+        <div style="margin-top: 1rem; font-size: .8rem; color: var(--muted, #888);">
+          Kerberoasting · RBCD · SID History · DPAPI · ACL Abuse
+        </div>
       </a>
 
       <a class="card link-card" href="/azure">
-        <h3>Azure</h3>
-        <p>Identity, privileges, Graph abuse, managed identities, and cloud attack paths.</p>
+        <span class="index-badge" style="margin-bottom: .75rem; display: inline-block;">02 / Azure / Entra ID</span>
+        <h3>Azure / Entra ID</h3>
+        <p>Token tradecraft, Graph and ARM abuse, Key Vault exploitation, hybrid attack paths, and cross-tenant pivoting.</p>
+        <div style="margin-top: 1rem; font-size: .8rem; color: var(--muted, #888);">
+          DCF · FOCI · PIM · MI Abuse · Lighthouse · Writeback
+        </div>
       </a>
+
+      <div class="card link-card" style="opacity: 0.55; cursor: default;">
+        <span class="index-badge" style="margin-bottom: .75rem; display: inline-block;">03 / Hacking Web</span>
+        <h3>Hacking Web</h3>
+        <p>Web exploitation notes covering authentication bypass, access control, injection patterns, APIs, and logic flaws.</p>
+        <div style="margin-top: 1rem; font-size: .8rem; color: var(--muted, #888); display: flex; justify-content: space-between; align-items: center;">
+          <span>Auth Bypass · Access Control · Injection · APIs</span>
+          <span style="font-size: .7rem; letter-spacing: .06em; padding: .15rem .45rem; border: 1px solid currentColor; border-radius: 2px; opacity: .7;">COMING SOON</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <section class="section-block">
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-      <a class="card link-card compact" href="/notes"><h3>Notes</h3></a>
-      <a class="card link-card compact" href="/about"><h3>About</h3></a>
-      <a class="card link-card compact" href="/contact"><h3>Contact</h3></a>
-    </div>
+  <!-- CONTACT STRIP -->
+  <section id="contact" class="availability-strip" style="border-top: 1px solid var(--border, rgba(255,255,255,.08)); padding: 1.25rem 0; margin-top: 2rem; display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">
+    <span style="font-size: .7rem; letter-spacing: .1em; color: var(--accent); font-weight: 600; padding-top: .2rem; white-space: nowrap; flex-shrink: 0;">AVAILABLE</span>
+    <p style="font-size: .85rem; color: var(--muted, #888); margin: 0; line-height: 1.6; flex: 1; min-width: 180px;">
+      Available for red team engagements, identity security, cloud security, and web security work.
+    </p>
+    <nav style="display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; white-space: nowrap; flex-shrink: 0;">
+      <a href="mailto:stwarsmurrieta02@gmail.com" style="font-size: .85rem; color: var(--muted, #888);">Email</a>
+      <a href="https://github.com/ricepattyjulls" target="_blank" rel="noopener noreferrer" style="font-size: .85rem; color: var(--muted, #888);">GitHub</a>
+      <a href="https://www.linkedin.com/in/stwarsmurrieta/" target="_blank" rel="noopener noreferrer" style="font-size: .85rem; color: var(--muted, #888);">LinkedIn</a>
+    </nav>
   </section>
+
+
+
 </BaseLayout>
