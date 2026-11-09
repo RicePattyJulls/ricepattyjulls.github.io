@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { DepthCard } from "@/components/ui/DepthCard";
 import { ArrowLeft, ArrowUpRight, Terminal } from "lucide-react";
 import { accentColor, Kicker } from "@/components/ui/primitives";
 import { Section } from "@/components/layout/Section";
@@ -49,19 +50,13 @@ function ToolkitBlock({ group }: { group: ToolkitGroup }) {
         className="mt-7 grid gap-4 sm:grid-cols-2"
       >
         {group.tools.map((t) => (
-          <motion.a
-            key={t.name}
-            variants={depthIn}
+          <motion.div key={t.name} variants={depthIn}>
+          <DepthCard accent={color}
             href={t.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="panel-strong group relative flex flex-col overflow-hidden p-5 transition-transform duration-300 hover:-translate-y-1"
+            className="h-full p-5"
           >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -inset-12 -z-10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20"
-              style={{ background: `radial-gradient(circle at 50% 0%, ${color}, transparent 70%)` }}
-            />
             <div className="flex items-start justify-between gap-3">
               <span className="font-mono text-[13.5px] font-medium text-white">{t.name}</span>
               <ArrowUpRight
@@ -70,7 +65,8 @@ function ToolkitBlock({ group }: { group: ToolkitGroup }) {
               />
             </div>
             <p className="mt-2 text-[12.5px] leading-relaxed text-text-dim">{t.detail}</p>
-          </motion.a>
+          </DepthCard>
+          </motion.div>
         ))}
       </motion.div>
     </section>

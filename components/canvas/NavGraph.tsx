@@ -218,7 +218,7 @@ export function NavGraph() {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useAnimationFrame((_, delta) => {

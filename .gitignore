@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local recovery review and browser evidence
+/.integration-review/
+
+# Local tools, recovery, audit and review notes
+/.claude/
+/.agents/
+/.codex/
+/docs/
+/scripts/
+/hice_esto.md
+/AGENTS.md
+/CLAUDE.md
+/.browser-tmp/

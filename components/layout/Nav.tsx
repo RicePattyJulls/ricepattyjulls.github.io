@@ -19,20 +19,15 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // close the mobile menu on route change (adjust state during render,
-  // no effect round trip: https://react.dev/learn/you-might-not-need-an-effect)
-  const [prevPathname, setPrevPathname] = useState(pathname);
-  if (pathname !== prevPathname) {
-    setPrevPathname(pathname);
-    setOpen(false);
-  }
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // close the mobile menu on route change
+  useEffect(() => setOpen(false), [pathname]);
 
   return (
     <motion.header
@@ -42,7 +37,7 @@ export function Nav() {
       className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4"
     >
       <nav
-        className={`panel flex w-full max-w-6xl items-center justify-between rounded-2xl border py-2.5 pl-4 pr-3 transition-all duration-300 ${
+        className={`panel flex w-full max-w-7xl items-center justify-between rounded-2xl border py-2.5 pl-4 pr-3 transition-all duration-300 ${
           scrolled
             ? "border-[color:var(--border-strong)] shadow-[0_10px_40px_-20px_rgba(124,92,255,0.5)]"
             : "border-[color:var(--border)]"
@@ -64,7 +59,7 @@ export function Nav() {
         </Link>
 
         {/* desktop links */}
-        <div className="hidden items-center gap-0.5 lg:flex">
+        <div className="hidden items-center gap-0.5 xl:flex">
           {nav.map((item) => {
             const active = isActive(pathname, item);
             const color = item.accent ? accentColor[item.accent] : "var(--violet)";
@@ -72,7 +67,7 @@ export function Nav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative rounded-lg px-3 py-1.5 font-mono text-[12px] tracking-wide transition-colors ${
+                className={`relative rounded-lg px-2 py-1.5 font-mono text-[11px] tracking-wide transition-colors ${
                   active ? "text-white" : "text-text-dim hover:text-white"
                 }`}
               >
@@ -103,8 +98,10 @@ export function Nav() {
           </Link>
           <button
             aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
             onClick={() => setOpen((v) => !v)}
-            className="grid h-9 w-9 place-items-center rounded-lg border border-[color:var(--border-strong)] text-text-dim lg:hidden"
+            className="grid h-9 w-9 place-items-center rounded-lg border border-[color:var(--border-strong)] text-text-dim xl:hidden"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -114,11 +111,12 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25 }}
-            className="panel absolute inset-x-4 top-20 z-40 flex flex-col gap-1 p-3 lg:hidden"
+            className="panel absolute inset-x-4 top-20 z-40 flex max-h-[calc(100dvh-6rem)] flex-col gap-1 overflow-y-auto p-3 xl:hidden"
           >
             {nav.map((item) => {
               const active = isActive(pathname, item);

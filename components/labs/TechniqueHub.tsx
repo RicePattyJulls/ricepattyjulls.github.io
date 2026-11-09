@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { DepthCard } from "@/components/ui/DepthCard";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { accentColor, Kicker, KineticHeading } from "@/components/ui/primitives";
 import { Section } from "@/components/layout/Section";
@@ -22,6 +23,8 @@ type LabSection = {
 };
 
 export type TechniqueHubProps = {
+  itemLabel?: string;
+  sectionLabel?: string;
   basePath: string;
   kicker: string;
   title: string;
@@ -42,15 +45,11 @@ function TechniqueCard({
 }) {
   return (
     <motion.div variants={depthIn}>
-      <Link
+      <DepthCard
         href={href}
-        className="panel-strong group relative flex h-full flex-col overflow-hidden p-6 transition-transform duration-300 hover:-translate-y-1"
+        accent={color}
+        className="relative h-full p-6"
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-12 -z-10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20"
-          style={{ background: `radial-gradient(circle at 50% 0%, ${color}, transparent 70%)` }}
-        />
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-display text-[17px] font-semibold leading-snug tracking-tight text-white">
             {t.title}
@@ -85,12 +84,14 @@ function TechniqueCard({
             </span>
           ))}
         </div>
-      </Link>
+      </DepthCard>
     </motion.div>
   );
 }
 
 export function TechniqueHub({
+  itemLabel = "Techniques",
+  sectionLabel = "Phases",
   basePath,
   kicker,
   title,
@@ -139,7 +140,7 @@ export function TechniqueHub({
               {total}
             </div>
             <div className="font-mono mt-1 text-[10px] uppercase tracking-[0.16em] text-text-mute">
-              Techniques
+              {itemLabel}
             </div>
           </div>
           <div>
@@ -147,7 +148,7 @@ export function TechniqueHub({
               {sections.length}
             </div>
             <div className="font-mono mt-1 text-[10px] uppercase tracking-[0.16em] text-text-mute">
-              Phases
+              {sectionLabel}
             </div>
           </div>
         </motion.div>

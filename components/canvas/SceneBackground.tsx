@@ -1,20 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-
-const emptySubscribe = () => () => {};
-/* Hydration-safe "mounted" flag: getServerSnapshot returns false so the
-   poster renders during SSR/first paint, getSnapshot flips to true once
-   the client takes over — no effect + setState round trip needed. */
-function useHasMounted() {
-  return useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false,
-  );
-}
 
 /* WebGL is client-only and lazy — keeps it out of the server bundle and
    off the critical path. A CSS poster covers first paint + reduced-motion. */
@@ -36,7 +24,9 @@ function Poster() {
 
 export default function SceneBackground() {
   const reduced = useReducedMotion();
-  const ready = useHasMounted();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => setReady(true), []);
 
   if (reduced || !ready) return <Poster />;
   return <Scene />;

@@ -15,7 +15,15 @@ export function slugifyHeading(text: string): string {
 /* Outline from the top-level (##) headings, in document order. */
 export function extractToc(md: string): TocItem[] {
   const items: TocItem[] = [];
+  let fence: string | null = null;
   for (const line of md.split("\n")) {
+    const marker = /^\s*(`{3,}|~{3,})(.*)$/.exec(line);
+    if (marker) {
+      if (!fence) fence = marker[1][0];
+      else if (fence === marker[1][0] && !marker[2].trim()) fence = null;
+      continue;
+    }
+    if (fence) continue;
     const m = /^##\s+(?!#)(.+?)\s*$/.exec(line);
     if (m) {
       const text = m[1].replace(/`/g, "").trim();

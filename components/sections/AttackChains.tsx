@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { DepthCard } from "@/components/ui/DepthCard";
 import { ArrowUpRight, ShieldAlert } from "lucide-react";
 import { Kicker, KineticHeading } from "@/components/ui/primitives";
 import { Section } from "@/components/layout/Section";
@@ -56,10 +57,10 @@ export function AttackChains() {
         </div>
 
         <motion.div variants={rise} className="relative mt-10">
-          <Link
+          <DepthCard
             href={`/attack-chains/${featured.slug}`}
-            className="group flex flex-col gap-4 rounded-2xl border p-6 transition-colors hover:border-[color:var(--danger)] sm:p-8"
-            style={{ borderColor: "var(--border-strong)", background: "rgba(255,255,255,0.02)" }}
+            accent="#fb7185"
+            className="p-6 sm:p-8 [&_.depth-card__content]:gap-4"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -89,7 +90,7 @@ export function AttackChains() {
                 </span>
               ))}
             </div>
-          </Link>
+          </DepthCard>
         </motion.div>
 
         <motion.div variants={rise} className="relative mt-6 flex items-center justify-between">

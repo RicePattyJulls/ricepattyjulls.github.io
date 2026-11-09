@@ -353,3 +353,92 @@ body {
 .hljs-strong { font-weight: 600; }
 .hljs-deletion { color: var(--danger); }
 .hljs-addition { color: var(--recon); }
+
+/* Library surfaces: layered material, quiet depth, responsive pointer feedback. */
+.depth-card {
+  --card-accent: #a78bfa;
+  --card-x: 50%;
+  --card-y: 25%;
+  --card-rx: 0deg;
+  --card-ry: 0deg;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 23%, #20232f);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--card-accent) 13%, transparent), transparent 62%),
+    linear-gradient(145deg, #191c2b 0%, #10131e 48%, #0b0d15 100%);
+  box-shadow: 0 12px 24px -12px #000b, 0 3px 0 -1px #080a11,
+    0 4px 0 -1px color-mix(in srgb, var(--card-accent) 18%, #171a28),
+    inset 0 1px 0 #ffffff12, inset 0 -1px 0 #0009;
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+  transition: transform 220ms cubic-bezier(.2,0,0,1), box-shadow 220ms ease-out, border-color 180ms ease-out;
+}
+.depth-card::before, .depth-card::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  content: "";
+}
+.depth-card::before {
+  background: linear-gradient(125deg, #ffffff0c, transparent 36%, transparent 70%, color-mix(in srgb, var(--card-accent) 5%, transparent));
+  border-top: 1px solid #ffffff13;
+}
+.depth-card::after {
+  opacity: 0;
+  background: radial-gradient(350px circle at var(--card-x) var(--card-y), color-mix(in srgb, var(--card-accent) 14%, transparent), transparent 70%);
+  transition: opacity 180ms ease-out;
+}
+.depth-card__content { position: relative; z-index: 1; display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.depth-card:focus-visible {
+  outline: 2px solid var(--card-accent);
+  outline-offset: 5px;
+  border-color: var(--card-accent);
+  box-shadow: 0 24px 42px -22px color-mix(in srgb, var(--card-accent) 35%, #000), inset 0 1px 0 #ffffff20;
+}
+.depth-card:focus-visible::after { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .depth-card:hover {
+    z-index: 2;
+    transform: perspective(900px) translateY(-6px) rotateX(var(--card-rx)) rotateY(var(--card-ry));
+    border-color: color-mix(in srgb, var(--card-accent) 65%, #404456);
+    box-shadow: 0 26px 42px -20px #000d,
+      0 12px 40px -24px var(--card-accent),
+      0 4px 0 -1px #0a0c15, inset 0 1px 0 #ffffff24;
+  }
+  .depth-card:hover::after { opacity: 1; }
+  .depth-card:hover .lab-card-arrow { transform: translate(2px, -2px); color: white; border-color: var(--card-accent); }
+}
+.depth-card:active { transform: perspective(900px) translateY(-2px) scale(.985); transition-duration: 100ms; }
+.lab-document-card { min-height: 270px; }
+.lab-card-icon {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px;
+  background: linear-gradient(145deg, #ffffff0c, #ffffff02);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 30%, transparent);
+  box-shadow: inset 0 1px 0 #ffffff14, 0 6px 14px -6px #0008;
+}
+.lab-card-watermark { position: absolute; z-index: -1; right: -4px; top: 48px; width: 106px; height: 106px; color: var(--card-accent); opacity: .07; pointer-events: none; }
+.lab-card-footer { border-top: 1px solid color-mix(in srgb, var(--card-accent) 13%, #ffffff08); }
+.lab-card-arrow { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #ffffff12; border-radius: 9px; color: var(--card-accent); background: #ffffff04; transition: transform 180ms ease-out, color 180ms, border-color 180ms; }
+.lab-section-number { display: grid; place-items: center; flex-shrink: 0; height: 34px; width: 34px; border: 1px solid currentColor; border-radius: 10px; font: 11px var(--font-jetbrains-mono), monospace; background: #ffffff03; }
+.lab-explorer__toolbar { padding: 22px; border: 1px solid #ffffff0d; border-radius: 20px; background: linear-gradient(135deg, #151827b3, #0c0e17b3); box-shadow: inset 0 1px 0 #ffffff06; }
+.lab-explorer__search { display: flex; align-items: center; gap: 10px; padding: 0 14px; background: #05060a88; border: 1px solid #ffffff0e; border-radius: 12px; transition: border-color 160ms ease-out, box-shadow 160ms ease-out; }
+.lab-explorer__search:focus-within { border-color: #a78bfa99; box-shadow: 0 0 0 3px #a78bfa12; }
+.lab-explorer__search input::-webkit-search-cancel-button { display: none; }
+.lab-filter { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid #ffffff12; padding: 9px 12px; border-radius: 10px; color: var(--text-dim); font-size: 11px; background: #ffffff02; cursor: pointer; transition: border-color 150ms ease-out, background 150ms ease-out, color 150ms ease-out; }
+.lab-filter span { font-size: 10px; opacity: .75; font-variant-numeric: tabular-nums; }
+.lab-filter:hover { color: #fff; border-color: #a78bfa70; background: #a78bfa0b; }
+.lab-filter[aria-pressed="true"] { color: #e6dcff; border-color: #a78bfa88; background: linear-gradient(135deg, #a78bfa26, #7c5cff14); box-shadow: inset 0 1px 0 #ffffff0d, 0 2px 6px #0003; }
+.lab-filter:focus-visible { outline: 2px solid #a78bfa; outline-offset: 3px; }
+@media (max-width: 639px) {
+  .lab-explorer__toolbar { padding: 16px; }
+  .lab-filter { min-height: 40px; }
+  .lab-document-card { min-height: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .depth-card, .depth-card:hover, .depth-card:active { transform: none !important; }
+  .depth-card .lab-card-arrow { transform: none !important; }
+}

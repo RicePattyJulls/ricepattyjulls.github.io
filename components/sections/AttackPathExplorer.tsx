@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -148,7 +148,10 @@ export function AttackPathExplorer() {
     return () => mq.removeEventListener("change", on);
   }, []);
 
-  useEffect(() => {
+  const useIsomorphic =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+  useIsomorphic(() => {
     if (!isDesktop || reduced) return;
     const section = sectionRef.current;
     const track = trackRef.current;
@@ -186,6 +189,7 @@ export function AttackPathExplorer() {
       ctx.revert();
       pinTrigger.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDesktop, reduced]);
 
   const jump = (i: number) => {

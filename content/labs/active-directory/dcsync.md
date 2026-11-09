@@ -122,3 +122,9 @@ secretsdump.py -k -no-pass DC01.DOMAIN.LOCAL -just-dc-user domain/krbtgt
 - `-just-dc-ntlm`: extract only NTLM hashes
 - `-just-dc-user <USERNAME>`: extract only one user's data
 - `DC01.DOMAIN.LOCAL`: the target DC name
+
+
+## Recorridos e investigación relacionados
+
+- [Active Directory Attack Paths: recorrido de laboratorio](/labs/gcb-lab)
+- [Posible DCSync con Splunk](/soc-investigations/splunk-dcsync) — caso de laboratorio CDSA con análisis de telemetría.

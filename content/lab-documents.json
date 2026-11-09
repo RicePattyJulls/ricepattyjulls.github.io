@@ -1,0 +1,562 @@
+[
+  {
+    "lab": "crto-lab",
+    "page": "domains/contoso-com",
+    "title": "contoso.example",
+    "description": "Parent domain used to resolve ForeignSecurityPrincipal mappings, recover trust-account material, and project access into enclave.example.",
+    "group": "domains",
+    "href": "/labs/crto-lab/domains/contoso-com/",
+    "sourceLines": 45,
+    "sourceSha256": "15b804b6c48a11030766bb9d0ecee8a4a58088ea327e8f0b9379b96e09e279d1"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "domains/contoso-enclave",
+    "title": "enclave.example",
+    "description": "Restricted enclave reached through inter-realm ticketing and then extended through Enclave Access group placement and RBCD on an internal file server.",
+    "group": "domains",
+    "href": "/labs/crto-lab/domains/contoso-enclave/",
+    "sourceLines": 22,
+    "sourceSha256": "49f726ac7d18416ac10dfdfba0bfb64c2fd302df63dbed8a787184adf48dd9d7"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "domains/dublin-contoso-com",
+    "title": "DUBLIN.contoso.example",
+    "description": "Child domain where the main campaign runs: workstation foothold, local admin reuse, token theft, constrained delegation, SQL execution, and the first domain-controller compromise.",
+    "group": "domains",
+    "href": "/labs/crto-lab/domains/dublin-contoso-com/",
+    "sourceLines": 89,
+    "sourceSha256": "165b1e49248625d800db54d222983fb7b602376a4573d82fe058f0bb5a85334b"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/dub-dc-1",
+    "title": "DUB-DC-1 ~ 10.200.2.1 (nwallace)",
+    "description": "Dublin domain controller reached after privilege growth on the SQL host. This system marked the transition from host compromise to child-domain ownership and the bridge into the parent domain.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/dub-dc-1/",
+    "sourceLines": 44,
+    "sourceSha256": "f405054387ea4c0759ea1305d36138b782e29d567baa5fe257deb7bcb2afd782"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/dub-sql-1",
+    "title": "DUB-SQL-1 ~ 10.200.2.20 (iappleton > SYSTEM)",
+    "description": "SQL Server in Dublin. Reached through constrained delegation and then converted into SQL CLR execution, a linked Beacon, SYSTEM, and the bridge toward the child-domain controller.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/dub-sql-1/",
+    "sourceLines": 256,
+    "sourceSha256": "640883f59987918922a1e2c6006b6f3047dae0e1e8e518a230bf1039c836f5c0"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/dub-web-1",
+    "title": "DUB-WEB-1 ~ 10.200.2.30 (tdobson)",
+    "description": "Web-tier host in Dublin. This system exposed the constrained delegation relationship that made SQL access both practical and strategically important.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/dub-web-1/",
+    "sourceLines": 83,
+    "sourceSha256": "219fae602dfbf65448e577a459555b459b4997317b5dd959c72448f2e0d15e3e"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/dub-wkstn-1",
+    "title": "DUB-WKSTN-1 ~ 10.200.3.100 (administrator)",
+    "description": "Secondary workstation reached through local-admin password reuse. Its main value was the tdobson token that opened the bridge into the web tier.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/dub-wkstn-1/",
+    "sourceLines": 30,
+    "sourceSha256": "301c830ede8d90dd23da4dabf2bb76ceff0bc76744a56fce832b55ee95ee14b7"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/dub-wkstn-2",
+    "title": "DUB-WKSTN-2 ~ 10.200.3.102 (consultant)",
+    "description": "Initial foothold in Dublin. The first workstation provided the entry point, AppLocker-aware DLL execution, and the local-admin password reuse that started the chain.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/dub-wkstn-2/",
+    "sourceLines": 38,
+    "sourceSha256": "7b7e4b7881be9448130e627eee9a5923b64328339dd429c22e95bb6d3e8a1c77"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/enc-fs-1",
+    "title": "ENC-FS-1 10.200.4.10 (SYSTEM)",
+    "description": "Writing to the host as the ultimate goal",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/enc-fs-1/",
+    "sourceLines": 8,
+    "sourceSha256": "4933820b1446d39b0a4928712274d125c32259564885039611ee519025870ac0"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/enc-jmp-1",
+    "title": "ENC-JMP-1 ~ 10.200.4.50 (SYSTEM)",
+    "description": "Enclave jump host reached through inter-realm ticketing. This host exposed the ACLs that turned enclave access into enclave leverage through RBCD.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/enc-jmp-1/",
+    "sourceLines": 95,
+    "sourceSha256": "3100414bf91ffb078fcc9e8244e717bea9d87a99171eeac8320b6416cccc0caa"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "hosts/lon-dc-1",
+    "title": "LON-DC-1 ~ 10.200.1.1 (SYSTEM)",
+    "description": "Parent-domain controller used to resolve ForeignSecurityPrincipal mappings, identify the real Enclave Access relationship, and recover trust-account material for the enclave pivot.",
+    "group": "hosts",
+    "href": "/labs/crto-lab/hosts/lon-dc-1/",
+    "sourceLines": 120,
+    "sourceSha256": "8f31d9ff2b36352b3e9de5ee98ae21e849a65d0f4109948924a0b15774aa775d"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "mitigation",
+    "title": "Mitigation",
+    "description": "Practical hardening ideas derived from the lab, covering local admin reuse, delegation, SQL execution paths, trust abuse, and enclave exposure.",
+    "group": "defense",
+    "href": "/labs/crto-lab/mitigation/",
+    "sourceLines": 71,
+    "sourceSha256": "275c7c4d65ddc9da9eb07ddb26f102a361cc181420a4ec2eb3ad5c4ac2f850ee"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "mssql",
+    "title": "MSSQL Execution Thread",
+    "description": "How constrained delegation on DUB-WEB-1 became SQL administration, CLR-based execution, a linked Beacon, and then host-level control on DUB-SQL-1.",
+    "group": "reference",
+    "href": "/labs/crto-lab/mssql/",
+    "sourceLines": 229,
+    "sourceSha256": "c87cbd43473139c40be2585cd3c70d6394ab14291bfdfd0c90b4ec475218a75d"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "paths/path-1-workstation-compromise-and-internal-pivot",
+    "title": "Workstation Compromise and Internal Pivot",
+    "description": "Path 1 of the CRTO lab, from the first foothold on DUB-WKSTN-2 through local-admin password reuse and token theft into the Dublin web tier.",
+    "group": "paths",
+    "href": "/labs/crto-lab/paths/path-1-workstation-compromise-and-internal-pivot/",
+    "sourceLines": 22,
+    "sourceSha256": "0480e030bfb8a86460f74a0de0769a21bb62953e561e1f1ea480140d1ff4d579"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "paths/path-2-constrained-delegation-to-sql-compromise",
+    "title": "Constrained Delegation to SQL Compromise",
+    "description": "Path 2 of the CRTO lab, where DUB-WEB-1 machine-account delegation becomes SQL sysadmin access, CLR execution, a linked Beacon, and control of DUB-SQL-1.",
+    "group": "paths",
+    "href": "/labs/crto-lab/paths/path-2-constrained-delegation-to-sql-compromise/",
+    "sourceLines": 18,
+    "sourceSha256": "5325753b9223549bbf5a1eb0a26bbea2500928bf5ada8c56957c6f3196d5b098"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "paths/path-3-child-domain-to-root-domain-compromise",
+    "title": "Child Domain to Root Domain Compromise",
+    "description": "Path 3 of the CRTO lab, where control of DUB-SQL-1 becomes child-domain ownership on DUB-DC-1 and then administrative reach into the parent-domain controller LON-DC-1.",
+    "group": "paths",
+    "href": "/labs/crto-lab/paths/path-3-child-domain-to-root-domain-compromise/",
+    "sourceLines": 21,
+    "sourceSha256": "8a01cd49a0e2d2c2d5d5242be5744d5ede205e192c6f26d48956a57b00dd5f60"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "paths/path-4-trust-abuse-and-rbcd-into-enclave",
+    "title": "Trust Abuse and RBCD into ENCLAVE",
+    "description": "Path 4 of the CRTO lab, where the parent-domain trust is abused to reach ENC-JMP-1 and then extended to ENC-FS-1 through RBCD.",
+    "group": "paths",
+    "href": "/labs/crto-lab/paths/path-4-trust-abuse-and-rbcd-into-enclave/",
+    "sourceLines": 22,
+    "sourceSha256": "ca04cd5b6cded49f7fb0b910266d793ab89d5dac10be7630dc92b6221c09e076"
+  },
+  {
+    "lab": "crto-lab",
+    "page": "preparation",
+    "title": "Preparation of the C2",
+    "description": "Defense and evasion notes for the CRTO lab, including the exact Malleable C2 choices used for staging, post-exploitation, and process injection.",
+    "group": "reference",
+    "href": "/labs/crto-lab/preparation/",
+    "sourceLines": 64,
+    "sourceSha256": "4a955281235e686a994b4cd4ba06bb5bda4b25bcae980766feac84e0f9c83755"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "deteccion-y-telemetria",
+    "title": "Deteccion Y Telemetria",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "defense",
+    "href": "/labs/gcb-lab/deteccion-y-telemetria/",
+    "sourceLines": 437,
+    "sourceSha256": "26c6912422b0938ef3e4e4ba360355811b5fe3d52a7867d697514919c31aba0e"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/gcb-local",
+    "title": "gcb.example",
+    "description": "Enumerated from IT-EMPLOYEE15 as itemployee15. Bidirectional intra-forest trust with it.gcb.example.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/gcb-local/",
+    "sourceLines": 61,
+    "sourceSha256": "25a3d217b002f995049a534e9606083755a5644480c9a43ae6f90335f3abe6d8"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/gcbacc-local",
+    "title": "gcbacc.example",
+    "description": "Enumerated from acc-dc07.gcbacc.example following cross-forest access via PAM Shadow Principal from gcbsec.example.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/gcbacc-local/",
+    "sourceLines": 60,
+    "sourceSha256": "b7251134b6e5399409fa9bd88f3924fcfc97b7372b5e74e192fe990189109f1a"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/gcbfinance-local",
+    "title": "gcbfinance.example",
+    "description": "Enumerated from IT-EMPLOYEE15 as itemployee15. Inbound external trust from it.gcb.example exists but is quarantined — direct escalation is not possible.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/gcbfinance-local/",
+    "sourceLines": 66,
+    "sourceSha256": "256b963f6b3fb3201f9db704e196e4883da3906f196286444c365a031b940f46"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/gcbhr-local",
+    "title": "gcbhr.example",
+    "description": "Enumerated from HR-ERIKA as hr\\erika in the gcbhr.example domain.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/gcbhr-local/",
+    "sourceLines": 117,
+    "sourceSha256": "9ff86b5e72c869037c2cacc32503a88b5724abbfd0058eb0ef5afc394d44c605"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/gcbsec-local",
+    "title": "gcbsec.example",
+    "description": "Enumerated from SEC-SYSLOG01. No accessible trust relationship exists from IT, GCB, or GCBFINANCE — an intermediate pivot host was required for domain visibility.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/gcbsec-local/",
+    "sourceLines": 87,
+    "sourceSha256": "b089e6d18c59d30c2c29e2c5f26c03825f3196a4f4c397c47da28a03d03e509e"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/gcbvault-local",
+    "title": "gcbvault.example",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/gcbvault-local/",
+    "sourceLines": 27,
+    "sourceSha256": "de5f22f0d8b14c484a3cc2ad4c803842e9ade0841dbd68f891dd02b6e59ae489"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/internal-msp-local",
+    "title": "internal.msp.example",
+    "description": "Enumerated from MSP-SQLREPORT as mspdb, leveraging the intra-forest parent-child relationship with internal.msp.example for direct LDAP authentication and enumeration.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/internal-msp-local/",
+    "sourceLines": 101,
+    "sourceSha256": "8798194a28b3ff3adbbb425b6b5fa7dd36ec435c3d50980cf65f33e1f531ceb6"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/it-gcb-local",
+    "title": "it.gcb.example",
+    "description": "Domain foothold y punto de entrada principal del environment.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/it-gcb-local/",
+    "sourceLines": 300,
+    "sourceSha256": "f0da162f1b44b77667cf3b0fe8e68c581e78162772ed85f5693b5ac24a4e4ba4"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "domains/msp-local",
+    "title": "msp.example",
+    "description": "Enumerated from IT-SQLSRV02 — the only validated host within it.gcb.example capable of establishing a correct LDAP bind against msp.example.",
+    "group": "domains",
+    "href": "/labs/gcb-lab/domains/msp-local/",
+    "sourceLines": 138,
+    "sourceSha256": "638501b8563ac04df5bc1cbc6eb4a960a0d9327f3373595803070bf772154a28"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/acc-dc07",
+    "title": "ACC-DC07",
+    "description": "DCSync as Enterprise Admin via PAM, lateral movement to ACC-DATA, and escrow credential recovery.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/acc-dc07/",
+    "sourceLines": 48,
+    "sourceSha256": "a31d95f0e698e2e33a3e1f31174dcc0f53bb92731030a40c06be6449633c9c29"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/finance-vanessa",
+    "title": "FINANCE-VANESSA",
+    "description": "JEA endpoint abuse, Unconstrained Delegation coercion, and DCSync against gcbfinance.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/finance-vanessa/",
+    "sourceLines": 400,
+    "sourceSha256": "e388e412fa21d25e62b04d7519c7115ae2add7d977709f19aa907c298a807c86"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/gcb-wsus",
+    "title": "GCB-WSUS",
+    "description": "WSUS role abuse, malicious update injection, segmentation bypass, and RCE on VAULT-SRV.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/gcb-wsus/",
+    "sourceLines": 150,
+    "sourceSha256": "2d5f63710ddf17ce07d2f874660091855d13456b8ef31bcbfd121e064291a7c0"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/hr-erika",
+    "title": "HR-ERIKA",
+    "description": "Exchange Windows Permissions abuse via GenericAll on Exchange OU, WriteDACL delegation, DCSync, and full gcbhr.example compromise.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/hr-erika/",
+    "sourceLines": 81,
+    "sourceSha256": "21e726f45dead781659ef3ce8993bcc06cb5015859299eeb386a4fa9d34e2900"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/internal-batch",
+    "title": "INTERNAL-BATCH",
+    "description": "KCD + TrustedToAuthForDelegation abuse, DCSync, Golden Ticket with ExtraSID, and full MSP forest compromise.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/internal-batch/",
+    "sourceLines": 141,
+    "sourceSha256": "e443800ac7fd730315530bd527eccf81fde611e067fcb4c4fef7a5f0582cc9da"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/internal-srv06",
+    "title": "INTERNAL-SRV06",
+    "description": "LSASS dump, batchsvc credential recovery, and lateral movement to INTERNAL-BATCH.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/internal-srv06/",
+    "sourceLines": 46,
+    "sourceSha256": "b14d0cc33a5a67295ca69c12a13f4275eb5d159edfdf5b8aa04fa1ed372c316c"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-appsrv01",
+    "title": "IT-APPSRV01",
+    "description": "Lateral movement via keytab credential extraction and NTLM reuse.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-appsrv01/",
+    "sourceLines": 106,
+    "sourceSha256": "9ddea24a4d13cb9d3855b41fa2619654b336d46085157314d97ded5f8a38c593"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-employee15-to-hr-erika",
+    "title": "IT-EMPLOYEE15 to HR-ERIKA",
+    "description": "POP3 mailbox enumeration, Shadow IT identification, LNK phishing, and lateral movement to gcbhr.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-employee15-to-hr-erika/",
+    "sourceLines": 408,
+    "sourceSha256": "5a922dfc10aa5730de5645fb42a070216405b0d22e529d62b38e9943e1c97749"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-employee15-to-it-dc",
+    "title": "IT-EMPLOYEE15 to IT-DC",
+    "description": "Escrow credential reconstruction, WriteDACL abuse, Golden Ticket + ExtraSID, and full gcb.example forest compromise.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-employee15-to-it-dc/",
+    "sourceLines": 88,
+    "sourceSha256": "0af136be3f963fded29a90f933c827a759ebb3dfadd28223eac07c4fd87dcfd7"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-employee15",
+    "title": "IT-EMPLOYEE15",
+    "description": "Initial foothold in it.gcb.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-employee15/",
+    "sourceLines": 266,
+    "sourceSha256": "7729bad34da6fa98132da48f7ed41297a7c2e7d430b312090e3852bd289db561"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-sqlsrv02",
+    "title": "IT-SQLSRV02",
+    "description": "Kerberoasting, credential reuse, and cross-forest pivot to msp.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-sqlsrv02/",
+    "sourceLines": 63,
+    "sourceSha256": "779b5f75c4de523f4c7aa0dcf8def2e0d25433d07c3ab717ca55bb7d79a9f7c1"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-track01-to-finance-vanessa",
+    "title": "IT-TRACK01 to FINANCE-VANESSA",
+    "description": "HTTP traffic capture, cleartext credential recovery, and pivot to gcbfinance.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-track01-to-finance-vanessa/",
+    "sourceLines": 70,
+    "sourceSha256": "d4f26ae57687d3100680ce1a015599f70abbe40dc9c272a8ed5063bc64b78c4c"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-track01-to-it-preprod",
+    "title": "IT-TRACK01 to IT-PREPROD",
+    "description": "Redmine LDAP credentials extracted from MySQL, GPO-based local admin access to IT-PREPROD.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-track01-to-it-preprod/",
+    "sourceLines": 61,
+    "sourceSha256": "e3997b2ba6093fd299d2b24de4e1dfb974ccdd79f8987dcd9f44ac55b456e527"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/it-track01-to-sec-syslog01",
+    "title": "IT-TRACK01 to SEC-SYSLOG01",
+    "description": "LSASS minidump exposed via Redmine attachment, credential extraction, and access to gcbsec.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/it-track01-to-sec-syslog01/",
+    "sourceLines": 70,
+    "sourceSha256": "3527d399809305cef69a058413f925744b56bb2ac3e7d4018bc79964733112c8"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/msp-sqlreport",
+    "title": "MSP-SQLREPORT",
+    "description": "Self-Membership ACL abuse, privilege chaining, and lateral movement to internal.msp.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/msp-sqlreport/",
+    "sourceLines": 104,
+    "sourceSha256": "158bda0cb8c2e6c510d5fa287c2459e58243cc91a54b6d96e6a0d88d2eea66ed"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/msp-srv01",
+    "title": "MSP-SRV01",
+    "description": "PSWA access via port forwarding pivot and LSASS credential dump.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/msp-srv01/",
+    "sourceLines": 66,
+    "sourceSha256": "be6517267c8d161c9ae7d0aea52fd9e98e9a038ca641919f20da1e39b2d7967e"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/sec-dc",
+    "title": "SEC-DC",
+    "description": "PAM / Shadow Principal abuse for cross-forest privilege materialization into gcbacc.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/sec-dc/",
+    "sourceLines": 81,
+    "sourceSha256": "748b6910b6ee8d49b3ce6445941e63ca907708ec103c509005afeef526cca32c"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/sec-syslog01",
+    "title": "SEC-SYSLOG01",
+    "description": "AppLocker bypass via SYSTEM, LSASS dump, registry hive exfiltration, and access to gcbsec.example.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/sec-syslog01/",
+    "sourceLines": 157,
+    "sourceSha256": "533e2314782e3f9879c9c4794713ca85106917e6eaa8d90499dcaa68323f2500"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "hosts/vault-srv",
+    "title": "VAULT-SRV",
+    "description": "Hyper-V host — offline NTDS.dit extraction via VHDX mount and full gcbvault.example compromise.",
+    "group": "hosts",
+    "href": "/labs/gcb-lab/hosts/vault-srv/",
+    "sourceLines": 144,
+    "sourceSha256": "562604af8ba42a921689269751957981f979d4aa44151b6f45889be5419873a9"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "overview",
+    "title": "Active Directory Attack Paths",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "reference",
+    "href": "/labs/gcb-lab/overview/",
+    "sourceLines": 50,
+    "sourceSha256": "e6a7cea8e0646700608da42ebd0cc358ba21b8c249dd61902113ae309b012d84"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "loot",
+    "title": "Loot",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "evidence",
+    "href": "/labs/gcb-lab/loot/",
+    "sourceLines": 364,
+    "sourceSha256": "ed489200ef803702b737fc6db4c1ccc2bf8a0d2147c3f82afb4a0decd54e3775"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "mapa-compromiso",
+    "title": "Mapa Compromiso",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "evidence",
+    "href": "/labs/gcb-lab/mapa-compromiso/",
+    "sourceLines": 82,
+    "sourceSha256": "44cb43cd0450009d2013aa501bad46443cd671ffc03238bf634563b305d176be"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "mitigacion-y-remediacion",
+    "title": "Mitigacion Y Remediacion",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "defense",
+    "href": "/labs/gcb-lab/mitigacion-y-remediacion/",
+    "sourceLines": 1860,
+    "sourceSha256": "fa06a620b287e29c56cdf87df46a8ad4a715ee2080b9dcf009e17bd0a0e6f8bc"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "paths/path-1-it-internal-msp",
+    "title": "Path 1 It Internal Msp",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "paths",
+    "href": "/labs/gcb-lab/paths/path-1-it-internal-msp/",
+    "sourceLines": 103,
+    "sourceSha256": "caad996ec46317b44f9ecd62c842ab19bae6f2b156e74a6579a09724f27138c9"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "paths/path-2-it-finance",
+    "title": "Path 2 It Finance",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "paths",
+    "href": "/labs/gcb-lab/paths/path-2-it-finance/",
+    "sourceLines": 85,
+    "sourceSha256": "225e6745687a8c0d9602f33f033b01fde835ebc2bb7687d80074c89c682a8835"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "paths/path-3-it-sec-acc",
+    "title": "Path 3 It Sec Acc",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "paths",
+    "href": "/labs/gcb-lab/paths/path-3-it-sec-acc/",
+    "sourceLines": 100,
+    "sourceSha256": "1a0c07930e43f1345442197b86fd5ffb0c7125fe4f8c242044410394909e57d6"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "paths/path-4-gcb-vault",
+    "title": "Path 4 Gcb Vault",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "paths",
+    "href": "/labs/gcb-lab/paths/path-4-gcb-vault/",
+    "sourceLines": 87,
+    "sourceSha256": "53f43a25df84e2856ef7c3dbe37902f5a7eeb13132ab3eadd555e696af2c89ed"
+  },
+  {
+    "lab": "gcb-lab",
+    "page": "paths/path-5-it-hr",
+    "title": "Path 5 It Hr",
+    "description": "Documentación del recorrido de laboratorio, con comandos, observaciones y contexto.",
+    "group": "paths",
+    "href": "/labs/gcb-lab/paths/path-5-it-hr/",
+    "sourceLines": 72,
+    "sourceSha256": "110365d6657e5d457a862a873e16b3c09453bb4972a757e84ef212e6be91b036"
+  }
+]

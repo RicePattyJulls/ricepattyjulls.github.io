@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { DepthCard } from "@/components/ui/DepthCard";
 import { ArrowUpRight, FlaskConical, Radar } from "lucide-react";
 import { accentColor, Kicker } from "@/components/ui/primitives";
 import { Section } from "@/components/layout/Section";
 import { depthIn, inView, stagger } from "@/lib/motion";
+import { labCases, socCases } from "@/content/case-studies";
 import { adTechniques } from "@/content/active-directory";
 import { azureTechniques } from "@/content/azure-entra";
 import { webTechniques } from "@/content/hacking-web";
@@ -15,6 +16,7 @@ type Lib = {
   href: string;
   accent: "violet" | "blue" | "cyan";
   count: number;
+  unit?: string;
   blurb: string;
   source: string;
   soon?: boolean;
@@ -22,12 +24,22 @@ type Lib = {
 
 const libs: Lib[] = [
   {
+    domain: "Security Labs", href: "/labs", accent: "violet", count: labCases.length,
+    unit: "labs", source: "Cobalt Strike · Active Directory",
+    blurb: "Offensive security labs with evidence, attack paths, outcomes, and remediation.",
+  },
+  {
+    domain: "SOC Investigations", href: "/soc-investigations", accent: "cyan", count: socCases.length,
+    unit: "investigations", source: "CDSA · Elastic · Splunk",
+    blurb: "Phishing and suspected DCSync investigated through timelines, queries, and evidence confidence.",
+  },
+  {
     domain: "Active Directory",
     href: "/active-directory",
     accent: "violet",
     count: adTechniques.length,
     blurb: "Kerberos abuse, delegation, domain dominance, and trust exploitation.",
-    source: "CRTO · CRTM lab work",
+    source: "Active Directory research",
   },
   {
     domain: "Azure / Entra ID",
@@ -56,12 +68,12 @@ export function LabsResearch() {
             <FlaskConical size={12} /> Labs &amp; Research
           </Kicker>
           <h2 className="font-display mt-3 max-w-xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            A working technique library, not a link dump
+            Lab journeys, investigations & field techniques
           </h2>
         </div>
         <p className="max-w-sm text-sm leading-relaxed text-text-dim">
-          Every technique here was validated in a lab and written up with
-          preconditions, attack chain, and detection — usable, not theoretical.
+          Follow the lab journeys and SOC investigations, or explore the
+          technique library for individual attack paths and detection context.
         </p>
       </div>
 
@@ -70,15 +82,16 @@ export function LabsResearch() {
         initial="hidden"
         whileInView="show"
         viewport={inView}
-        className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+        className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
       >
         {libs.map((l) => {
           const color = accentColor[l.accent];
           return (
             <motion.div key={l.domain} variants={depthIn} style={{ perspective: 1000 }}>
-              <Link
+              <DepthCard
                 href={l.href}
-                className="group panel-strong relative flex h-full flex-col overflow-hidden rounded-3xl p-6 transition-transform duration-300 hover:-translate-y-1.5"
+                accent={color}
+                className="relative h-full p-6"
               >
                 <span
                   aria-hidden
@@ -90,7 +103,7 @@ export function LabsResearch() {
                     {l.count}
                   </span>
                   <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-text-mute">
-                    techniques
+                    {l.unit ?? "techniques"}
                   </span>
                 </div>
                 <h3 className="font-display mt-4 text-[15px] font-semibold text-white">
@@ -108,16 +121,16 @@ export function LabsResearch() {
                     className="text-text-mute transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
                   />
                 </div>
-              </Link>
+              </DepthCard>
             </motion.div>
           );
         })}
 
         {/* OSINT — coming soon */}
         <motion.div variants={depthIn}>
-          <Link
+          <DepthCard
             href="/osint"
-            className="group panel-strong relative flex h-full flex-col overflow-hidden rounded-3xl p-6 opacity-80 transition-opacity duration-300 hover:opacity-100"
+            className="relative h-full p-6"
           >
             <div className="flex items-center gap-2 text-text-dim">
               <Radar size={20} style={{ color: "var(--cyan)" }} />
@@ -138,7 +151,7 @@ export function LabsResearch() {
                 className="text-text-mute transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
               />
             </div>
-          </Link>
+          </DepthCard>
         </motion.div>
       </motion.div>
     </Section>

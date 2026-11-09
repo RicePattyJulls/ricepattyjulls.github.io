@@ -11,19 +11,6 @@ import {
 import * as THREE from "three";
 import { useScrollProgressRef } from "@/lib/scroll";
 
-/* Deterministic PRNG (mulberry32) — Math.random() during render is impure
-   and breaks React's re-render/concurrent guarantees. Same seed + count
-   always scatters the same starfield, which looks identical to the eye. */
-function mulberry32(seed: number) {
-  let t = seed;
-  return () => {
-    t = (t + 0x6d2b79f5) | 0;
-    let r = Math.imul(t ^ (t >>> 15), 1 | t);
-    r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
-    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
 /* ------------------------------------------------------------------ *
  * Drifting particle field — the ambient "energy".
  * ------------------------------------------------------------------ */
@@ -32,12 +19,11 @@ function ParticleField({ count = 1400 }: { count?: number }) {
   const scroll = useScrollProgressRef();
 
   const positions = useMemo(() => {
-    const rand = mulberry32(count);
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      arr[i * 3] = (rand() - 0.5) * 22;
-      arr[i * 3 + 1] = (rand() - 0.5) * 14;
-      arr[i * 3 + 2] = (rand() - 0.5) * 14;
+      arr[i * 3] = (Math.random() - 0.5) * 22;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      arr[i * 3 + 2] = (Math.random() - 0.5) * 14;
     }
     return arr;
   }, [count]);

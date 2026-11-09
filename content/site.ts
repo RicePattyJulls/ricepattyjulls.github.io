@@ -96,6 +96,8 @@ export const nav: NavItem[] = [
   { label: "Entra ID", href: "/azure-entra", accent: "blue", match: "/azure-entra" },
   { label: "Hacking Web", href: "/hacking-web", accent: "cyan", match: "/hacking-web" },
   { label: "Attack Chains", href: "/attack-chains", accent: "danger", match: "/attack-chains" },
+  { label: "Labs", href: "/labs", accent: "violet", match: "/labs" },
+  { label: "SOC", href: "/soc-investigations", accent: "cyan", match: "/soc-investigations" },
   { label: "OSINT", href: "/osint", match: "/osint" },
   { label: "Tools", href: "/tools", accent: "violet", match: "/tools" },
   { label: "About", href: "/about", match: "/about" },

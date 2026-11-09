@@ -1,49 +1,26 @@
-# RicePattyJulls — Offensive Security Portfolio
+# RicePattyJulls — Security Portfolio
 
-Portfolio and knowledge base for RicePattyJulls' offensive security work, built with [Next.js](https://nextjs.org) (App Router) and deployed as a static site on GitHub Pages.
+Portfolio de seguridad ofensiva e investigaciones SOC, desarrollado con Next.js y exportación estática.
 
-## Contents
-
-- **Active Directory** — credential access, delegation, domain dominance and trust abuse techniques.
-- **Azure / Entra ID** — Graph API abuse, managed identities, key vault, cross-tenant/B2B, hybrid AD paths, etc.
-- **Attack Chains** — end-to-end attack chains.
-- **Hacking Web** — web exploitation notes and techniques.
-- **OSINT, Tools, Reports** — supporting resources and utilities.
-
-Markdown content lives in `content/labs/<domain>/` and is rendered via `lib/labs.ts` plus the components in `components/labs/`.
-
-## Stack
-
-- Next.js 16 (App Router) + React 19 + TypeScript
-- Tailwind CSS 4
-- react-three-fiber / drei / three for the 3D background
-- framer-motion / gsap for animations
-- react-markdown + remark-gfm + rehype-slug/highlight for lab content
-- Static export (`output: "export"`) deployed to GitHub Pages via `.github/workflows/deploy.yml`
-
-## Development
+## Desarrollo
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Build
+## Compilación
 
 ```bash
 npm run build
 ```
 
-Generates the static site in `./out` (the same artifact uploaded by the deploy workflow).
+La salida estática se genera en `out/`. GitHub Actions compila y publica en GitHub Pages al actualizar `main`.
 
-## Structure
+## Contenido
 
-```
-app/            routes (App Router)
-components/     UI, layout, canvas and section components
-content/labs/   lab Markdown content
-lib/            helpers (lab loading, motion, scroll, table of contents)
-docs/           internal reference notes
-```
+- Security Labs: Cobalt Strike Operations y Active Directory Attack Paths.
+- SOC Investigations: análisis con Elastic y Splunk.
+- Bibliotecas de Active Directory, Azure / Entra ID y seguridad web.
+
+Los laboratorios son entornos de entrenamiento. Las versiones adaptadas usan alias y marcadores para material sensible.

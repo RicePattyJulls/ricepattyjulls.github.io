@@ -165,3 +165,9 @@ pypykatz kerberos spnroast -d domain.local -t SAPService -e 23 'kerberos+passwor
 hashcat -m 13100 user_tgs rock.list
 ```
 
+
+
+## Recorridos e investigación relacionados
+
+- [Active Directory Attack Paths: recorrido de laboratorio](/labs/gcb-lab)
+- [Phishing con Elastic](/soc-investigations/elastic-phishing) — caso de laboratorio CDSA con análisis de telemetría.
